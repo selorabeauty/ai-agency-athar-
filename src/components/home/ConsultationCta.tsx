@@ -5,8 +5,8 @@ import { SectionLabel } from "@/components/ui/SectionLabel";
 export function ConsultationCta() {
   return (
     <section aria-labelledby="cta-heading" className="grad-blue relative overflow-hidden text-white">
-      <div aria-hidden className="pointer-events-none absolute -bottom-40 inset-inline-start-[-10%] h-[520px] w-[520px] rounded-full border border-white/10" />
-      <div aria-hidden className="pointer-events-none absolute -top-56 inset-inline-end-[-5%] h-[640px] w-[640px] rounded-full border border-white/10" />
+      <div aria-hidden className="pointer-events-none absolute -bottom-40 start-[-10%] h-[520px] w-[520px] rounded-full border border-white/10" />
+      <div aria-hidden className="pointer-events-none absolute -top-56 end-[-5%] h-[640px] w-[640px] rounded-full border border-white/10" />
       <div className="container-x relative flex flex-col items-start gap-10 py-28 lg:flex-row lg:items-end lg:justify-between lg:py-40">
         <Reveal>
           <SectionLabel tone="light">استشارة</SectionLabel>

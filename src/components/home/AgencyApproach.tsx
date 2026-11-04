@@ -9,7 +9,7 @@ export function AgencyApproach() {
       <div className="container-x grid gap-12 py-20 lg:grid-cols-12 lg:gap-16 lg:py-32">
         <Reveal className="relative aspect-[4/5] overflow-hidden rounded-[3px] lg:col-span-6 lg:aspect-auto lg:min-h-[640px]">
           <Image src="/images/team.jpg" alt="اجتماع عمل في مكتب حديث" fill sizes="(min-width:1024px) 50vw, 100vw" className="object-cover" />
-          <span className="absolute bottom-4 inset-inline-start-4 label text-white/80">منهج أثر — ٢٠٢٦</span>
+          <span className="absolute bottom-4 start-4 label text-white/80">منهج أثر — ٢٠٢٦</span>
         </Reveal>
 
         <div className="flex flex-col justify-center lg:col-span-5 lg:col-start-8">

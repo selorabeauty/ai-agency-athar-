@@ -84,7 +84,7 @@ export default function AboutPage() {
           <ul className="mt-10 grid gap-px bg-line sm:grid-cols-2">
             {values.map((v, i) => (
               <Reveal key={v.n} as="li" delay={i * 0.08} className="relative bg-white p-8 lg:p-12">
-                <span className="outline-numeral absolute top-4 inset-inline-end-6 text-7xl" aria-hidden>
+                <span className="outline-numeral absolute top-4 end-6 text-7xl" aria-hidden>
                   {v.n}
                 </span>
                 <h3 className="font-display text-2xl text-navy">{v.t}</h3>

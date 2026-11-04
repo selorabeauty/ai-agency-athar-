@@ -10,7 +10,7 @@ const fieldOrder: Fields[] = ["name", "email", "whatsapp", "sector", "message"];
 const inputCls =
   "peer w-full border-0 border-b border-line bg-transparent px-0 pt-6 pb-2 text-navy outline-none transition focus:border-navy aria-[invalid=true]:border-red-500";
 const labelCls =
-  "pointer-events-none absolute inset-inline-start-0 top-6 text-sm text-muted transition-all peer-focus:top-0 peer-focus:text-[11px] peer-focus:tracking-[0.12em] peer-[:not(:placeholder-shown)]:top-0 peer-[:not(:placeholder-shown)]:text-[11px] peer-[:not(:placeholder-shown)]:tracking-[0.12em]";
+  "pointer-events-none absolute start-0 top-6 text-sm text-muted transition-all peer-focus:top-0 peer-focus:text-[11px] peer-focus:tracking-[0.12em] peer-[:not(:placeholder-shown)]:top-0 peer-[:not(:placeholder-shown)]:text-[11px] peer-[:not(:placeholder-shown)]:tracking-[0.12em]";
 
 export function ContactForm() {
   const router = useRouter();
@@ -105,10 +105,10 @@ export function ContactForm() {
             </option>
           ))}
         </select>
-        <label htmlFor="sector" className="label pointer-events-none absolute inset-inline-start-0 top-0 text-muted">
+        <label htmlFor="sector" className="label pointer-events-none absolute start-0 top-0 text-muted">
           القطاع
         </label>
-        <span aria-hidden className="pointer-events-none absolute inset-inline-end-0 bottom-3 text-muted">
+        <span aria-hidden className="pointer-events-none absolute end-0 bottom-3 text-muted">
           ⌄
         </span>
         {err("sector")}

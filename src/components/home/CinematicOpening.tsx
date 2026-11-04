@@ -57,20 +57,20 @@ export function CinematicOpening() {
         <div className="relative flex h-full w-full items-center justify-center">
           <motion.figure
             style={pinned ? { x: sideXNeg, rotate: sideRot, opacity: sideOpacity } : { rotate: 1.5 }}
-            className="img-frame absolute inset-inline-end-[8%] top-[18%] z-10 hidden h-[34vh] w-[20vw] overflow-hidden rounded-[3px] shadow-2xl md:block"
+            className="img-frame absolute end-[8%] top-[18%] z-10 hidden h-[34vh] w-[20vw] overflow-hidden rounded-[3px] shadow-2xl md:block"
           >
             <Image src="/images/phone-chat.jpg" alt="هاتف يعرض محادثة مع مساعد ذكي" fill priority sizes="22vw" className="object-cover" />
-            <figcaption className="absolute bottom-3 inset-inline-start-3 text-[10px] tracking-[0.14em] text-white/80">
+            <figcaption className="absolute bottom-3 start-3 text-[10px] tracking-[0.14em] text-white/80">
               استقبال رقمي — ٢٤/٧
             </figcaption>
           </motion.figure>
 
           <motion.figure
             style={pinned ? { x: sideX, rotate: sideRotNeg, opacity: sideOpacity } : { rotate: -1.5 }}
-            className="img-frame absolute inset-inline-start-[8%] bottom-[14%] z-10 hidden h-[30vh] w-[18vw] overflow-hidden rounded-[3px] shadow-2xl md:block"
+            className="img-frame absolute start-[8%] bottom-[14%] z-10 hidden h-[30vh] w-[18vw] overflow-hidden rounded-[3px] shadow-2xl md:block"
           >
             <Image src="/images/server-glow.jpg" alt="رف خوادم بإضاءة خافتة" fill priority sizes="20vw" className="object-cover" />
-            <figcaption className="absolute bottom-3 inset-inline-start-3 text-[10px] tracking-[0.14em] text-white/80">
+            <figcaption className="absolute bottom-3 start-3 text-[10px] tracking-[0.14em] text-white/80">
               بنية تحتية تعمل بصمت
             </figcaption>
           </motion.figure>
@@ -107,7 +107,7 @@ export function CinematicOpening() {
               </motion.span>
             </AnimatePresence>
 
-            <h1 className="mt-5 font-display text-[clamp(2.6rem,7vw,6.5rem)] font-light leading-[1.1] text-white">
+            <h1 className="mt-5 font-display text-[clamp(2.4rem,5.5vw,5.25rem)] font-light leading-[1.15] text-white md:whitespace-nowrap">
               أثر للذكاء الاصطناعي
             </h1>
 

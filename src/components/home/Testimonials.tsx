@@ -25,7 +25,7 @@ export function Testimonials() {
         </div>
 
         <div className="relative min-h-[320px] py-14 lg:py-20" aria-live="polite">
-          <span aria-hidden className="outline-numeral absolute -top-2 inset-inline-start-0 text-[9rem] opacity-60 lg:text-[14rem]">
+          <span aria-hidden className="outline-numeral absolute -top-2 start-0 text-[9rem] opacity-60 lg:text-[14rem]">
             ”
           </span>
           <AnimatePresence mode="wait" initial={false}>

@@ -8,7 +8,7 @@ export function Footer() {
     <footer className="relative overflow-hidden bg-navy text-white">
       <svg
         aria-hidden
-        className="pointer-events-none absolute -top-40 inset-inline-end-[-10%] h-[720px] w-[720px] opacity-[0.12]"
+        className="pointer-events-none absolute -top-40 end-[-10%] h-[720px] w-[720px] opacity-[0.12]"
         viewBox="0 0 720 720"
         fill="none"
         stroke="white"
@@ -22,15 +22,15 @@ export function Footer() {
       </svg>
 
       <div className="container-x relative pt-20 pb-10">
-        <div className="grid grid-cols-12 gap-10">
-          <div className="col-span-12 lg:col-span-5">
+        <div className="grid grid-cols-2 gap-x-6 gap-y-10 lg:grid-cols-12 lg:gap-10">
+          <div className="col-span-2 lg:col-span-5">
             <p className="font-display text-[clamp(5rem,14vw,11rem)] leading-none text-white">{site.wordmark}</p>
             <p className="mt-3 max-w-sm text-sm text-white/60">
               وكالة سعودية تبني أنظمة ذكية تعمل لأجلك: استقبال رقمي، ظهور محلي، وأتمتة تُترجم إلى مبيعات.
             </p>
           </div>
 
-          <div className="col-span-6 lg:col-span-2 lg:col-start-7">
+          <div className="col-span-1 lg:col-span-2 lg:col-start-7">
             <p className="label mb-5 text-white/50">الوكالة</p>
             <ul className="space-y-3 text-sm text-white/80">
               {nav.map((n) => (
@@ -48,7 +48,7 @@ export function Footer() {
             </ul>
           </div>
 
-          <div className="col-span-6 lg:col-span-2">
+          <div className="col-span-1 lg:col-span-2">
             <p className="label mb-5 text-white/50">الخدمات</p>
             <ul className="space-y-3 text-sm text-white/80">
               {services.map((s) => (
@@ -61,7 +61,7 @@ export function Footer() {
             </ul>
           </div>
 
-          <div className="col-span-12 lg:col-span-2">
+          <div className="col-span-2 lg:col-span-2">
             <p className="label mb-5 text-white/50">تواصل</p>
             <ul className="space-y-3 text-sm text-white/80">
               <li>

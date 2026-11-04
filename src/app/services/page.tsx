@@ -40,12 +40,12 @@ export default function ServicesPage() {
             <div className="container-x grid gap-12 py-20 lg:grid-cols-12 lg:gap-16 lg:py-32">
               <Reveal className={`relative aspect-[5/4] overflow-hidden rounded-[3px] lg:col-span-6 lg:aspect-auto lg:min-h-[560px] ${flip ? "lg:order-2" : ""}`}>
                 <Image src={s.image} alt={s.title} fill sizes="(min-width:1024px) 50vw, 100vw" className="object-cover" />
-                <span className="absolute top-5 inset-inline-start-5 label text-white/85" dir="ltr">
+                <span className="absolute top-5 start-5 label text-white/85" dir="ltr">
                   {s.number}
                 </span>
               </Reveal>
               <div className={`relative flex flex-col justify-center lg:col-span-5 ${flip ? "lg:order-1 lg:col-start-1" : "lg:col-start-8"}`}>
-                <span className="outline-numeral pointer-events-none absolute -top-10 inset-inline-end-0 text-[9rem]" aria-hidden>
+                <span className="outline-numeral pointer-events-none absolute -top-10 end-0 text-[9rem]" aria-hidden>
                   {s.number}
                 </span>
                 <Reveal>

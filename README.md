@@ -15,7 +15,7 @@ npm run dev                  # http://localhost:3000
 | الأمر | الوظيفة |
 |---|---|
 | `npm run dev` | خادم التطوير (Turbopack) |
-| `npm run build` | بناء الإنتاج (`output: standalone`) |
+| `npm run build` | بناء الإنتاج |
 | `npm start` | تشغيل نسخة الإنتاج |
 | `npm run lint` | ESLint |
 
@@ -39,6 +39,6 @@ src/lib/contact.ts  مخطط التحقق (zod) وتطبيع رقم الجوال
 public/images/      الصور
 ```
 
-## النشر على Hostinger VPS
+## النشر
 
-`npm run build` ينتج `.next/standalone`؛ شغّله بـ `node .next/standalone/server.js` خلف Nginx/Caddy أو عبر Coolify/Dokploy.
+أي استضافة تدعم Next.js (Vercel، Netlify، أو خادم Node بـ `npm run build && npm start`). ملاحظة: التصدير الثابت (`output: "export"`) يعطّل مسار `/api/contact`؛ في هذه الحالة يجب تحويل النموذج إلى خدمة من جهة المتصفح مثل EmailJS.

@@ -38,7 +38,7 @@ function Story({ s, index, progress, pinned }: { s: Service; index: number; prog
       style={pinned ? { y: textY, opacity: textOpacity } : undefined}
       className={`relative flex flex-col justify-center px-6 py-12 lg:px-14 ${dark ? "bg-navy text-white" : "bg-white text-navy"}`}
     >
-      <span className="outline-numeral pointer-events-none absolute -top-2 inset-inline-end-6 text-[clamp(6rem,14vw,12rem)] opacity-70" aria-hidden>
+      <span className="outline-numeral pointer-events-none absolute -top-2 end-6 text-[clamp(6rem,14vw,12rem)] opacity-70" aria-hidden>
         {s.number}
       </span>
       <SectionLabel tone={dark ? "light" : "dark"}>{s.kicker}</SectionLabel>
@@ -68,11 +68,11 @@ function Story({ s, index, progress, pinned }: { s: Service; index: number; prog
       </motion.div>
       <motion.div
         style={pinned ? { y: detailY, opacity: detailOpacity } : undefined}
-        className="absolute bottom-[4%] inset-inline-start-[4%] h-[32%] w-[28%] overflow-hidden rounded-[3px] border border-white/70 shadow-xl"
+        className="absolute bottom-[4%] start-[4%] h-[32%] w-[28%] overflow-hidden rounded-[3px] border border-white/70 shadow-xl"
       >
         <Image src={s.detail} alt="" fill sizes="20vw" className="object-cover" />
       </motion.div>
-      <span className="absolute top-5 inset-inline-end-6 label text-navy/50 mix-blend-multiply" dir="ltr">
+      <span className="absolute top-5 end-6 label text-navy/50 mix-blend-multiply" dir="ltr">
         {s.number} — SOLUTION
       </span>
     </div>

@@ -26,7 +26,7 @@ export function TargetSectors() {
       </div>
 
       <div className="container-x grid gap-10 py-12 lg:grid-cols-12 lg:gap-16 lg:py-20">
-        <div className="lg:col-span-4">
+        <div className="min-w-0 lg:col-span-4">
           <div role="tablist" aria-label="اختر القطاع" className="flex flex-row gap-2 overflow-x-auto lg:flex-col lg:gap-0">
             {sectors.map((sec, i) => {
               const selected = i === active;
@@ -72,7 +72,7 @@ export function TargetSectors() {
           </div>
         </div>
 
-        <div className="lg:col-span-8">
+        <div className="min-w-0 lg:col-span-8">
           <div className="grid gap-8 lg:grid-cols-12">
             <div className="relative aspect-[16/11] overflow-hidden rounded-[3px] bg-pale lg:col-span-7">
               <AnimatePresence mode="wait" initial={false}>
@@ -87,7 +87,7 @@ export function TargetSectors() {
                   <Image src={s.image} alt={s.label} fill sizes="(min-width:1024px) 45vw, 100vw" className="object-cover" />
                 </motion.div>
               </AnimatePresence>
-              <span className="absolute bottom-4 inset-inline-start-4 label text-white/85">{s.label}</span>
+              <span className="absolute bottom-4 start-4 label text-white/85">{s.label}</span>
             </div>
 
             <div

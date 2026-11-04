@@ -126,7 +126,7 @@ export function MegaMenu() {
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -6 }}
             transition={{ duration: 0.28, ease: [0.22, 1, 0.36, 1] }}
-            className="absolute inset-inline-0 top-full border-t border-line bg-white shadow-[0_30px_60px_-30px_rgba(11,19,43,0.35)]"
+            className="absolute inset-x-0 top-full border-t border-line bg-white shadow-[0_30px_60px_-30px_rgba(11,19,43,0.35)]"
           >
             <div className="container-x grid grid-cols-12 gap-10 py-10">
               {columns.map((col) => (
