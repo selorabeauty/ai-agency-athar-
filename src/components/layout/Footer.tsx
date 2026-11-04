@@ -20,6 +20,12 @@ export function Footer() {
               </svg>
               <span dir="ltr">{site.email}</span>
             </a>
+            <a href={`https://wa.me/${site.phone}`} target="_blank" rel="noopener" className="mt-3 inline-flex items-center gap-2 rounded-full border border-line px-4 py-2 text-sm text-white transition hover:border-neon/60">
+              <svg viewBox="0 0 24 24" className="h-4 w-4 text-neon" fill="none" stroke="currentColor" strokeWidth="1.8" aria-hidden>
+                <path d="M21 12a8 8 0 0 1-11.6 7.1L4 20l1-4.6A8 8 0 1 1 21 12Z" />
+              </svg>
+              <span>واتساب: {site.phoneDisplay}</span>
+            </a>
             <p className="mt-3 text-xs text-muted">{site.city}</p>
           </div>
 

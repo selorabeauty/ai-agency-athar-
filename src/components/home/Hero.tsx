@@ -12,6 +12,41 @@ const chat = [
   { from: "bot", text: "تم حجز موعدك بكرة الساعة 7:00 مساءً ✓ أرسلنا لك الموقع والتفاصيل. نراك على خير!", time: "11:43 م" },
 ] as const;
 
+
+function AirRobot() {
+  const reduced = useReducedMotion();
+  return (
+    <motion.div
+      aria-hidden
+      initial={reduced ? false : { opacity: 0, scale: 0.6 }}
+      animate={reduced ? { opacity: 1 } : { opacity: 1, scale: 1, y: [0, -10, 0] }}
+      transition={{ opacity: { delay: 1.6, duration: 0.5 }, scale: { delay: 1.6, duration: 0.5, ease: editorialEase }, y: { delay: 2.1, duration: 2.6, repeat: Infinity, ease: "easeInOut" } }}
+      className="pointer-events-none absolute -top-9 end-4 hidden sm:block"
+    >
+      <span aria-hidden className="absolute -inset-4 rounded-full bg-neon/25 blur-xl" />
+      <svg viewBox="0 0 64 64" className="relative h-14 w-14 drop-shadow-[0_10px_24px_rgba(0,212,255,0.45)]">
+        <defs>
+          <linearGradient id="bot-g" x1="0" y1="0" x2="1" y2="1">
+            <stop offset="0" stopColor="#00d4ff" />
+            <stop offset="1" stopColor="#0077ff" />
+          </linearGradient>
+        </defs>
+        <line x1="32" y1="6" x2="32" y2="13" stroke="#00d4ff" strokeWidth="2.5" strokeLinecap="round" />
+        <circle cx="32" cy="5" r="3" fill="#00d4ff" />
+        <rect x="12" y="14" width="40" height="30" rx="13" fill="url(#bot-g)" />
+        <rect x="18" y="21" width="28" height="16" rx="8" fill="#0b132b" />
+        <circle cx="26" cy="29" r="3" fill="#00d4ff" />
+        <circle cx="38" cy="29" r="3" fill="#00d4ff" />
+        <path d="M12 24H7c-1.7 0-3 1.3-3 3v2c0 1.7 1.3 3 3 3h5v-8Z" fill="url(#bot-g)" />
+        <path d="M52 24h5c1.7 0 3 1.3 3 3v2c0 1.7-1.3 3-3 3h-5v-8Z" fill="url(#bot-g)" />
+        <rect x="24" y="46" width="16" height="5" rx="2.5" fill="#00d4ff" opacity="0.85" />
+        <circle cx="56" cy="50" r="2.4" fill="none" stroke="#00d4ff" strokeWidth="1.4" />
+        <circle cx="59" cy="45" r="1.6" fill="none" stroke="#00d4ff" strokeWidth="1.2" />
+      </svg>
+    </motion.div>
+  );
+}
+
 export function Hero() {
   const reduced = useReducedMotion();
   const fade = (delay: number) => ({
@@ -65,6 +100,7 @@ export function Hero() {
 
         <motion.div {...fade(0.2)} className="lg:col-span-5">
           <div className="card relative mx-auto max-w-md p-5 shadow-[0_40px_120px_-40px_rgba(0,119,255,0.5)]">
+            <AirRobot />
             <div className="flex items-center justify-between border-b border-line pb-4">
               <div className="flex items-center gap-3">
                 <span className="flex h-10 w-10 items-center justify-center rounded-full bg-gradient-to-br from-electric to-neon font-display text-sm font-extrabold text-navy">أ</span>

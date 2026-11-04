@@ -66,7 +66,7 @@ export async function POST(req: Request) {
   recent.set(fingerprint, now);
 
   const apiKey = process.env.RESEND_API_KEY;
-  const to = process.env.CONTACT_TO || "pchoarder@gmail.com";
+  const to = process.env.CONTACT_TO || "athar.digital.agrncy@gmail.com";
   const from = process.env.RESEND_FROM || "Athar <onboarding@resend.dev>";
 
   const subject = `طلب استشارة جديد — ${data.name} (${sectorLabel(data.sector)})`;

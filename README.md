@@ -25,7 +25,7 @@ npm run dev                  # http://localhost:3000
 |---|---|
 | `RESEND_API_KEY` | مفتاح Resend لإرسال رسائل نموذج التواصل (مطلوب في الإنتاج) |
 | `RESEND_FROM` | المرسل الموثّق، افتراضيًا `onboarding@resend.dev` |
-| `CONTACT_TO` | صندوق الاستلام، افتراضيًا `pchoarder@gmail.com` |
+| `CONTACT_TO` | صندوق الاستلام، افتراضيًا `athar.digital.agrncy@gmail.com` |
 
 بدون مفتاح في بيئة التطوير تُسجَّل الرسالة في الطرفية بدل إرسالها. في الإنتاج بدون مفتاح يعيد المسار `503`.
 
