@@ -1,0 +1,119 @@
+@import "tailwindcss";
+
+@theme {
+  --color-navy: #0b132b;
+  --color-royal: #1d3557;
+  --color-cobalt: #1e4fbf;
+  --color-icy: #dcebfa;
+  --color-pale: #eef4fb;
+  --color-offwhite: #f8f9fa;
+  --color-line: #e5e7eb;
+  --color-muted: #5b6475;
+
+  --font-display: var(--font-display), "IBM Plex Sans Arabic", system-ui, sans-serif;
+  --font-body: var(--font-body), "Noto Kufi Arabic", system-ui, sans-serif;
+
+  --ease-editorial: cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+:root {
+  color-scheme: light;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+body {
+  font-family: var(--font-body);
+  font-weight: 400;
+  line-height: 1.8;
+  text-rendering: optimizeLegibility;
+}
+
+h1,
+h2,
+h3,
+.font-display {
+  font-family: var(--font-display);
+  font-weight: 300;
+  line-height: 1.25;
+  letter-spacing: -0.01em;
+}
+
+.skip-link {
+  position: absolute;
+  inset-inline-start: 1rem;
+  top: -100%;
+  z-index: 100;
+  background: var(--color-navy);
+  color: #fff;
+  padding: 0.5rem 1rem;
+  border-radius: 999px;
+}
+.skip-link:focus {
+  top: 1rem;
+}
+
+.label {
+  font-size: 0.6875rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  font-weight: 500;
+}
+
+.hairline {
+  border-color: var(--color-line);
+  border-width: 1px;
+}
+
+.container-x {
+  padding-inline: clamp(1.25rem, 4vw, 4rem);
+  margin-inline: auto;
+  max-width: 1440px;
+  width: 100%;
+}
+
+.outline-numeral {
+  font-family: var(--font-display);
+  font-weight: 300;
+  color: transparent;
+  -webkit-text-stroke: 1px rgba(29, 53, 87, 0.22);
+  line-height: 1;
+  user-select: none;
+}
+
+.grad-blue {
+  background: linear-gradient(135deg, #0b132b 0%, #1d3557 45%, #1e4fbf 100%);
+}
+
+.pill-gradient {
+  background: linear-gradient(120deg, #1d3557 0%, #1e4fbf 60%, #3b82f6 100%);
+}
+
+.img-frame {
+  outline: 1px solid rgba(255, 255, 255, 0.55);
+  outline-offset: -6px;
+}
+
+.perspective {
+  perspective: 1400px;
+}
+
+:focus-visible {
+  outline: 2px solid var(--color-cobalt);
+  outline-offset: 3px;
+}
