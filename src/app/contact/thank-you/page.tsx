@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
-import Link from "next/link";
+import { Button } from "@/components/ui/Button";
+import { Reveal } from "@/components/ui/Reveal";
 import { SectionLabel } from "@/components/ui/SectionLabel";
 
 export const metadata: Metadata = {
@@ -9,26 +10,24 @@ export const metadata: Metadata = {
 
 export default function ThankYouPage() {
   return (
-    <section className="bg-white">
-      <div className="container-x flex min-h-[70vh] flex-col items-start justify-center py-24">
-        <SectionLabel>تم الاستلام</SectionLabel>
-        <h1 className="mt-5 max-w-3xl font-display text-[clamp(2.4rem,5.5vw,5rem)] leading-[1.1] text-navy">
-          شكرًا لك.
-          <br />
-          وصل طلبك وسنعود إليك خلال يوم عمل.
-        </h1>
-        <p className="mt-8 max-w-xl text-[15px] leading-8 text-muted">
-          في هذه الأثناء، يمكنك استكشاف أنظمتنا الثلاثة أو قراءة قصة أثر. إن كان الأمر عاجلًا، راسلنا على البريد الموضّح
-          في أسفل الصفحة.
-        </p>
-        <div className="mt-10 flex flex-wrap gap-3">
-          <Link href="/services" className="pill-gradient inline-flex h-11 items-center gap-2 rounded-full px-6 text-sm font-medium text-white">
-            استكشف خدماتنا <span aria-hidden>↗</span>
-          </Link>
-          <Link href="/" className="inline-flex h-11 items-center gap-2 rounded-full border border-line px-6 text-sm text-navy hover:border-navy">
-            الصفحة الرئيسية
-          </Link>
-        </div>
+    <section className="relative overflow-hidden">
+      <div aria-hidden className="glow-neon pointer-events-none absolute -top-40 start-1/2 h-[600px] w-[600px] translate-x-1/2" />
+      <div className="container-x relative flex min-h-[70vh] flex-col items-center justify-center py-24 text-center">
+        <Reveal>
+          <SectionLabel className="justify-center">تم الاستلام</SectionLabel>
+        </Reveal>
+        <Reveal as="h1" delay={0.05} className="mt-5 max-w-2xl text-[clamp(2rem,4.5vw,3.25rem)] leading-[1.25] text-white">
+          شكرًا لك. طلبك وصل، وسنعود إليك خلال يوم عمل.
+        </Reveal>
+        <Reveal as="p" delay={0.1} className="mt-6 max-w-xl text-lg text-white/75">
+          في هذه الأثناء، راجع الباقات أو اقرأ عن طريقتنا في العمل.
+        </Reveal>
+        <Reveal delay={0.15} className="mt-10 flex flex-col gap-3 sm:flex-row">
+          <Button href="/#pricing">الباقات والأسعار</Button>
+          <Button href="/about" variant="outline">
+            من نحن
+          </Button>
+        </Reveal>
       </div>
     </section>
   );

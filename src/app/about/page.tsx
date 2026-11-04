@@ -1,20 +1,20 @@
 import type { Metadata } from "next";
-import Image from "next/image";
 import { PageHero } from "@/components/ui/PageHero";
 import { Reveal } from "@/components/ui/Reveal";
-import { SectionLabel } from "@/components/ui/SectionLabel";
-import { ConsultationCta } from "@/components/home/ConsultationCta";
+import { SectionHeading } from "@/components/ui/SectionHeading";
+import { Button } from "@/components/ui/Button";
+import { sectors, site } from "@/lib/site";
 
 export const metadata: Metadata = {
   title: "من نحن",
-  description: "قصة وكالة أثر، فلسفة التشغيل الكامل، وقيمنا في بناء أنظمة ذكية للأعمال السعودية.",
+  description: "أثر للذكاء الاصطناعي: وكالة سعودية تبني أنظمة ذكية تعمل لأجل أصحاب الأعمال على مدار الساعة.",
 };
 
 const values = [
-  { n: "01", t: "الأثر قبل الأدوات", d: "لا نبيع تقنية. نبيع نتيجة قابلة للقياس: حجز، طلب، تقييم. الأداة تفصيل نحن من يتحمّله." },
-  { n: "02", t: "العربية أولًا", d: "كل ما نبنيه يُكتب ويُصمَّم بالعربية من السطر الأول، بلهجة يفهمها عميلك ويثق بها." },
-  { n: "03", t: "صفر صداع تقني", d: "أنت لا تدير خوادم ولا تتابع تحديثات. نحن نشغّل النظام ونطوّره وأنت ترى التقارير." },
-  { n: "04", t: "شفافية الأرقام", d: "تقرير شهري بلغة واضحة: كم رسالة أُجيبت، كم موعد حُجز، كم تقييم أُضيف. لا تعقيد." },
+  { title: "نطبّق قبل أن نبيع", body: "كل نظام نقدّمه لعملائنا يعمل أولًا داخل أثر: موقعنا، مساعدنا الذكي، وظهورنا في الخرائط." },
+  { title: "نتائج تُقاس، لا وعود", body: "نقيس ما يهمّك فعلًا: زمن الردّ، عدد الحجوزات، المكالمات من الخرائط — ونرسلها لك شهريًا بلغة واضحة." },
+  { title: "نظام واحد، لا أدوات متفرقة", body: "الموقع والواتساب والخرائط وCRM تعمل كمنظومة واحدة، لا كاشتراكات متناثرة يديرها موظف مرهق." },
+  { title: "بياناتك ملكك", body: "الدومين، الملف التجاري، وقاعدة العملاء تُسجَّل باسمك دائمًا، ونلتزم بنظام حماية البيانات الشخصية في المملكة." },
 ];
 
 export default function AboutPage() {
@@ -22,80 +22,51 @@ export default function AboutPage() {
     <>
       <PageHero
         label="من نحن"
-        title={
-          <>
-            وُلدت أثر من سؤال بسيط:
-            <br />
-            لماذا تخسر المنشآت الجيدة عملاءها رقميًا؟
-          </>
-        }
-        lead="لأن الرد متأخر، والموقع قديم، والظهور في الخرائط غائب. فبنينا وكالة تُصلح الثلاثة بنظام واحد — ونطبّقه على أنفسنا قبل عملائنا."
+        title="وُلدت أثر من سؤال بسيط: لماذا تخسر المنشآت الجيدة عملاءها رقميًا؟"
+        lead="لأن الردّ متأخر، والموقع قديم، والظهور في الخرائط غائب. فبنينا وكالة تُصلح الثلاثة بنظام واحد — ونطبّقه على أنفسنا قبل عملائنا."
       />
 
-      <section className="bg-white">
+      <section className="border-b border-line">
         <div className="container-x grid gap-12 py-20 lg:grid-cols-12 lg:py-28">
-          <Reveal className="relative aspect-[4/3] overflow-hidden rounded-[3px] lg:col-span-7 lg:aspect-[16/10]">
-            <Image src="/images/office-2.jpg" alt="مساحة عمل حديثة" fill sizes="(min-width:1024px) 60vw, 100vw" className="object-cover" />
-          </Reveal>
-          <div className="flex flex-col justify-center lg:col-span-4 lg:col-start-9">
-            <Reveal>
-              <SectionLabel>القصة</SectionLabel>
-              <h2 className="mt-4 font-display text-3xl leading-[1.25] lg:text-4xl">نأكل مما نطبخ.</h2>
+          <div className="lg:col-span-5">
+            <SectionHeading label="قصتنا" title="من الرياض، لأصحاب الأعمال الذين لا يملكون وقتًا لتفويت عميل" />
+          </div>
+          <div className="space-y-6 text-lg leading-relaxed text-white/75 lg:col-span-7">
+            <Reveal as="p">
+              {site.name} وكالة سعودية متخصصة في بناء أنظمة الذكاء الاصطناعي والأتمتة للأعمال: شات بوت واتساب يردّ خلال ثوانٍ، ظهور محلي في خرائط قوقل يجلب عملاء جددًا، وأنظمة CRM تتابع كل استفسار حتى يصبح حجزًا.
             </Reveal>
-            <Reveal delay={0.1} className="mt-6 space-y-5 text-[15px] leading-8 text-muted">
-              <p>
-                قبل أن نعرض أي خدمة على عميل، نشغّلها على وكالتنا: موقعنا، مساعدنا الذكي على واتساب، ظهورنا في خرائط
-                قوقل. ما تراه هنا هو المنتج نفسه.
-              </p>
-              <p>بدأنا من الرياض، ونخدم العيادات ومكاتب المحاماة والمصانع في كل مدن المملكة.</p>
+            <Reveal as="p" delay={0.05}>
+              نعمل مع {sectors.join("، و")} — قطاعات تملك عملاء جاهزين للدفع، لكنها تخسرهم يوميًا بسبب الردّ المتأخر والحضور الرقمي الضعيف.
+            </Reveal>
+            <Reveal as="p" delay={0.1}>
+              لا نبيع التقنية لذاتها. نبيع النتيجة: عميل راسلك الساعة ١١ مساءً وحجز موعده قبل أن ينام.
             </Reveal>
           </div>
         </div>
       </section>
 
-      <section className="bg-offwhite">
+      <section className="border-b border-line bg-ink">
         <div className="container-x py-20 lg:py-28">
-          <div className="grid gap-12 lg:grid-cols-12">
-            <div className="lg:col-span-4">
-              <Reveal>
-                <SectionLabel>فلسفة التشغيل الكامل</SectionLabel>
-                <h2 className="mt-4 font-display text-3xl leading-[1.25] lg:text-4xl">أنت تملك النتيجة. نحن نملك التعقيد.</h2>
-              </Reveal>
-            </div>
-            <Reveal delay={0.1} className="space-y-6 text-[15px] leading-8 text-muted lg:col-span-7 lg:col-start-6">
-              <p>
-                نموذجنا هو &quot;الخدمة المُدارة&quot;: نختار التقنية الأنسب من أفضل المزوّدين عالميًا، نبنيها لتناسب منشأتك،
-                ثم نشغّلها نيابة عنك باشتراك شهري واضح. لا رخص متناثرة، لا فريق تقني داخلي، لا مفاجآت.
-              </p>
-              <p>
-                ولأننا نثق بما نبنيه، نلتزم بضمان الأثر: إذا لم يُحدث النظام فرقًا قابلًا للقياس خلال ٩٠ يومًا، نعيد العمل
-                على حسابنا حتى يفعل.
-              </p>
-            </Reveal>
-          </div>
-        </div>
-      </section>
-
-      <section className="bg-white">
-        <div className="container-x py-20 lg:py-28">
-          <Reveal>
-            <SectionLabel>قيمنا</SectionLabel>
-          </Reveal>
-          <ul className="mt-10 grid gap-px bg-line sm:grid-cols-2">
+          <SectionHeading label="قيمنا" title="أربعة مبادئ نلتزم بها في كل مشروع" />
+          <div className="mt-14 grid gap-5 md:grid-cols-2">
             {values.map((v, i) => (
-              <Reveal key={v.n} as="li" delay={i * 0.08} className="relative bg-white p-8 lg:p-12">
-                <span className="outline-numeral absolute top-4 end-6 text-7xl" aria-hidden>
-                  {v.n}
-                </span>
-                <h3 className="font-display text-2xl text-navy">{v.t}</h3>
-                <p className="mt-4 max-w-sm text-[15px] leading-8 text-muted">{v.d}</p>
+              <Reveal key={v.title} delay={0.06 * i} className="card card-hover p-7">
+                <h3 className="text-lg font-bold text-white">{v.title}</h3>
+                <p className="mt-3 text-sm leading-relaxed text-white/70">{v.body}</p>
               </Reveal>
             ))}
-          </ul>
+          </div>
         </div>
       </section>
 
-      <ConsultationCta />
+      <section>
+        <div className="container-x flex flex-col items-start justify-between gap-8 py-20 lg:flex-row lg:items-center">
+          <h2 className="max-w-xl text-[clamp(1.6rem,3.2vw,2.5rem)] leading-[1.3] text-white">جاهز لنظام يعمل لأجلك على مدار الساعة؟</h2>
+          <Button href="/contact" size="lg">
+            اطلب استشارة مجانية <span aria-hidden>↗</span>
+          </Button>
+        </div>
+      </section>
     </>
   );
 }

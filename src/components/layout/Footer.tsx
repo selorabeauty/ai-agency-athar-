@@ -1,59 +1,47 @@
-"use client";
-
 import Link from "next/link";
-import { nav, services, site } from "@/lib/site";
+import { legalLinks, nav, services, site } from "@/lib/site";
+import { Logo } from "./Logo";
 
 export function Footer() {
   return (
-    <footer className="relative overflow-hidden bg-navy text-white">
-      <svg
-        aria-hidden
-        className="pointer-events-none absolute -top-40 end-[-10%] h-[720px] w-[720px] opacity-[0.12]"
-        viewBox="0 0 720 720"
-        fill="none"
-        stroke="white"
-        strokeWidth="0.8"
-      >
-        <circle cx="360" cy="360" r="340" />
-        <circle cx="360" cy="360" r="260" />
-        <circle cx="360" cy="360" r="170" />
-        <ellipse cx="360" cy="360" rx="340" ry="120" transform="rotate(-28 360 360)" />
-        <ellipse cx="360" cy="360" rx="340" ry="60" transform="rotate(18 360 360)" />
-      </svg>
-
-      <div className="container-x relative pt-20 pb-10">
-        <div className="grid grid-cols-2 gap-x-6 gap-y-10 lg:grid-cols-12 lg:gap-10">
+    <footer className="relative border-t border-line bg-ink">
+      <div className="container-x pt-16 pb-8">
+        <div className="grid grid-cols-2 gap-x-6 gap-y-12 lg:grid-cols-12 lg:gap-10">
           <div className="col-span-2 lg:col-span-5">
-            <p className="font-display text-[clamp(5rem,14vw,11rem)] leading-none text-white">{site.wordmark}</p>
-            <p className="mt-3 max-w-sm text-sm text-white/60">
-              وكالة سعودية تبني أنظمة ذكية تعمل لأجلك: استقبال رقمي، ظهور محلي، وأتمتة تُترجم إلى مبيعات.
-            </p>
+            <Logo />
+            <p className="mt-5 max-w-md text-sm leading-relaxed text-muted">{site.trust}</p>
+            <a
+              href={`mailto:${site.email}`}
+              className="mt-6 inline-flex items-center gap-2 rounded-full border border-line px-4 py-2 text-sm text-white transition hover:border-neon/60"
+            >
+              <svg viewBox="0 0 24 24" className="h-4 w-4 text-neon" fill="none" stroke="currentColor" strokeWidth="1.8" aria-hidden>
+                <rect x="3" y="5" width="18" height="14" rx="2" />
+                <path d="m3 7 9 6 9-6" />
+              </svg>
+              <span dir="ltr">{site.email}</span>
+            </a>
+            <p className="mt-3 text-xs text-muted">{site.city}</p>
           </div>
 
           <div className="col-span-1 lg:col-span-2 lg:col-start-7">
-            <p className="label mb-5 text-white/50">الوكالة</p>
+            <p className="label mb-5">روابط سريعة</p>
             <ul className="space-y-3 text-sm text-white/80">
               {nav.map((n) => (
                 <li key={n.href}>
-                  <Link href={n.href} className="hover:text-white">
+                  <Link href={n.href} className="hover:text-neon">
                     {n.label}
                   </Link>
                 </li>
               ))}
-              <li>
-                <Link href="/contact" className="hover:text-white">
-                  تواصل معنا
-                </Link>
-              </li>
             </ul>
           </div>
 
-          <div className="col-span-1 lg:col-span-2">
-            <p className="label mb-5 text-white/50">الخدمات</p>
+          <div className="col-span-1 lg:col-span-3">
+            <p className="label mb-5">الخدمات</p>
             <ul className="space-y-3 text-sm text-white/80">
               {services.map((s) => (
                 <li key={s.id}>
-                  <Link href={s.slug} className="hover:text-white">
+                  <Link href={`/services#${s.id}`} className="hover:text-neon">
                     {s.title}
                   </Link>
                 </li>
@@ -62,27 +50,25 @@ export function Footer() {
           </div>
 
           <div className="col-span-2 lg:col-span-2">
-            <p className="label mb-5 text-white/50">تواصل</p>
+            <p className="label mb-5">الصفحات القانونية</p>
             <ul className="space-y-3 text-sm text-white/80">
-              <li>
-                <a href={`mailto:${site.email}`} dir="ltr" className="inline-block hover:text-white">
-                  {site.email}
-                </a>
-              </li>
-              <li>{site.city}</li>
+              {legalLinks.map((l) => (
+                <li key={l.href + l.label}>
+                  <Link href={l.href} className="hover:text-neon">
+                    {l.label}
+                  </Link>
+                </li>
+              ))}
             </ul>
           </div>
         </div>
 
-        <div className="mt-16 flex flex-col items-start justify-between gap-6 border-t border-white/10 pt-6 text-xs text-white/50 sm:flex-row sm:items-center">
+        <div className="divider mt-14" />
+        <div className="flex flex-col items-start justify-between gap-4 pt-6 text-xs text-muted sm:flex-row sm:items-center">
           <p>© {new Date().getFullYear()} {site.name}. جميع الحقوق محفوظة.</p>
-          <button
-            type="button"
-            onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
-            className="inline-flex items-center gap-2 rounded-full border border-white/20 px-4 py-2 text-white/80 transition hover:border-white hover:text-white"
-          >
-            العودة للأعلى <span aria-hidden>↑</span>
-          </button>
+          <a href="#main" className="transition hover:text-white">
+            العودة إلى الأعلى ↑
+          </a>
         </div>
       </div>
     </footer>

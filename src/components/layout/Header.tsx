@@ -1,51 +1,36 @@
-"use client";
-
 import Link from "next/link";
-import { useEffect, useState } from "react";
 import { nav } from "@/lib/site";
+import { Button } from "@/components/ui/Button";
 import { Logo } from "./Logo";
-import { MegaMenu } from "./MegaMenu";
 import { MobileMenu } from "./MobileMenu";
 
 export function Header() {
-  const [scrolled, setScrolled] = useState(false);
-  useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 8);
-    onScroll();
-    window.addEventListener("scroll", onScroll, { passive: true });
-    return () => window.removeEventListener("scroll", onScroll);
-  }, []);
-
   return (
-    <header
-      className={`sticky top-0 z-50 bg-white/95 backdrop-blur-sm transition-shadow duration-300 ${
-        scrolled ? "shadow-[0_1px_0_0_#e5e7eb,0_10px_30px_-20px_rgba(11,19,43,0.25)]" : "shadow-[0_1px_0_0_#e5e7eb]"
-      }`}
-    >
-      <div className="container-x flex h-[72px] items-center justify-between gap-6">
-        <div className="flex items-center gap-10">
-          <Logo />
-          <nav aria-label="التنقل الرئيسي" className="hidden items-center gap-8 lg:flex">
+    <header className="sticky top-0 z-50 border-b border-line bg-navy/85 backdrop-blur-md">
+      <div className="container-x flex h-[76px] items-center justify-between gap-6">
+        <Logo />
+
+        <nav aria-label="التنقل الرئيسي" className="hidden lg:block">
+          <ul className="flex items-center gap-8">
             {nav.map((item) => (
-              <Link
-                key={item.href}
-                href={item.href}
-                className="relative text-sm text-navy/80 transition-colors hover:text-navy after:absolute after:start-0 after:-bottom-1 after:h-px after:w-0 after:bg-cobalt after:transition-all after:duration-300 hover:after:w-full"
-              >
-                {item.label}
-              </Link>
+              <li key={item.href}>
+                <Link
+                  href={item.href}
+                  className="relative py-2 text-[15px] font-medium text-white/80 transition hover:text-white after:absolute after:inset-x-0 after:-bottom-0.5 after:h-px after:origin-right after:scale-x-0 after:bg-neon after:transition-transform hover:after:scale-x-100"
+                >
+                  {item.label}
+                </Link>
+              </li>
             ))}
-            <MegaMenu />
-          </nav>
-        </div>
+          </ul>
+        </nav>
 
         <div className="flex items-center gap-3">
-          <Link
-            href="/contact"
-            className="pill-gradient hidden h-10 items-center gap-2 rounded-full px-5 text-sm font-medium text-white shadow-[0_8px_30px_-12px_rgba(30,79,191,0.8)] transition hover:brightness-110 sm:inline-flex"
-          >
-            اطلب استشارة <span aria-hidden>↗</span>
-          </Link>
+          <div className="hidden sm:block">
+            <Button href="/contact" size="md">
+              اطلب استشارة مجانية <span aria-hidden>↗</span>
+            </Button>
+          </div>
           <MobileMenu />
         </div>
       </div>

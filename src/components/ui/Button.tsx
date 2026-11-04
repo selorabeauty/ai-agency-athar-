@@ -1,19 +1,18 @@
 import Link from "next/link";
 import type { ReactNode } from "react";
 
-type Variant = "gradient" | "white" | "outline" | "navy";
+type Variant = "neon" | "outline" | "ghost";
 
 const styles: Record<Variant, string> = {
-  gradient: "pill-gradient text-white shadow-[0_8px_30px_-12px_rgba(30,79,191,0.7)] hover:brightness-110",
-  white: "bg-white text-navy hover:bg-offwhite",
-  outline: "border border-navy/20 text-navy hover:border-navy/60",
-  navy: "bg-navy text-white hover:bg-royal",
+  neon: "btn-neon font-bold",
+  outline: "border border-white/20 text-white hover:border-neon/70 hover:text-neon",
+  ghost: "text-white/80 hover:text-white",
 };
 
 export function Button({
   href,
   children,
-  variant = "gradient",
+  variant = "neon",
   className = "",
   size = "md",
 }: {
@@ -23,7 +22,7 @@ export function Button({
   className?: string;
   size?: "sm" | "md" | "lg";
 }) {
-  const sizes = { sm: "h-9 px-4 text-xs", md: "h-11 px-6 text-sm", lg: "h-13 px-8 text-base" };
+  const sizes = { sm: "h-10 px-4 text-sm", md: "h-11 px-6 text-sm", lg: "h-14 px-8 text-base" };
   return (
     <Link
       href={href}

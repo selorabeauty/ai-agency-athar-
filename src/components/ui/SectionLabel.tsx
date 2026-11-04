@@ -1,13 +1,8 @@
-export function SectionLabel({
-  children,
-  tone = "dark",
-  className = "",
-}: {
-  children: React.ReactNode;
-  tone?: "dark" | "light";
-  className?: string;
-}) {
+export function SectionLabel({ children, className = "" }: { children: React.ReactNode; className?: string }) {
   return (
-    <p className={`label ${tone === "dark" ? "text-muted" : "text-white/70"} ${className}`}>{children}</p>
+    <p className={`label inline-flex items-center gap-2 ${className}`}>
+      <span aria-hidden className="h-1.5 w-1.5 rounded-full bg-neon shadow-[0_0_12px_rgba(0,212,255,0.9)]" />
+      {children}
+    </p>
   );
 }

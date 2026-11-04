@@ -1,21 +1,21 @@
-import { CinematicOpening } from "@/components/home/CinematicOpening";
-import { SelectedSolutions } from "@/components/home/SelectedSolutions";
-import { AgencyApproach } from "@/components/home/AgencyApproach";
-import { GradientInterlude } from "@/components/home/GradientInterlude";
-import { TargetSectors } from "@/components/home/TargetSectors";
-import { Testimonials } from "@/components/home/Testimonials";
-import { ConsultationCta } from "@/components/home/ConsultationCta";
+import { Hero } from "@/components/home/Hero";
+import { PainPoints } from "@/components/home/PainPoints";
+import { Services } from "@/components/home/Services";
+import { Process } from "@/components/home/Process";
+import { Pricing } from "@/components/home/Pricing";
+import { Faq } from "@/components/home/Faq";
+import { FinalCta } from "@/components/home/FinalCta";
 
 export default function HomePage() {
   return (
     <>
-      <CinematicOpening />
-      <SelectedSolutions />
-      <AgencyApproach />
-      <GradientInterlude />
-      <TargetSectors />
-      <Testimonials />
-      <ConsultationCta />
+      <Hero />
+      <PainPoints />
+      <Services />
+      <Process />
+      <Pricing />
+      <Faq />
+      <FinalCta />
     </>
   );
 }

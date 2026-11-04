@@ -1,19 +1,21 @@
 "use client";
 
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { useRef, useState } from "react";
 import { contactSchema, sectorOptions } from "@/lib/contact";
+import { packageName } from "@/lib/site";
 
 type Fields = "name" | "email" | "whatsapp" | "sector" | "message";
 const fieldOrder: Fields[] = ["name", "email", "whatsapp", "sector", "message"];
 
 const inputCls =
-  "peer w-full border-0 border-b border-line bg-transparent px-0 pt-6 pb-2 text-navy outline-none transition focus:border-navy aria-[invalid=true]:border-red-500";
-const labelCls =
-  "pointer-events-none absolute start-0 top-6 text-sm text-muted transition-all peer-focus:top-0 peer-focus:text-[11px] peer-focus:tracking-[0.12em] peer-[:not(:placeholder-shown)]:top-0 peer-[:not(:placeholder-shown)]:text-[11px] peer-[:not(:placeholder-shown)]:tracking-[0.12em]";
+  "w-full rounded-xl border border-line bg-white/5 px-4 py-3 text-white placeholder:text-muted/70 outline-none transition focus:border-neon focus:bg-white/[0.07] aria-[invalid=true]:border-red-400";
+const labelCls = "mb-2 block text-sm font-medium text-white/85";
 
 export function ContactForm() {
   const router = useRouter();
+  const params = useSearchParams();
+  const pkg = packageName(params.get("package") ?? "");
   const [errors, setErrors] = useState<Partial<Record<Fields | "form", string>>>({});
   const [status, setStatus] = useState<"idle" | "sending" | "sent">("idle");
   const lastSubmit = useRef<string>("");
@@ -68,55 +70,71 @@ export function ContactForm() {
 
   const err = (f: Fields) =>
     errors[f] ? (
-      <p id={`${f}-error`} role="alert" className="mt-2 text-xs text-red-600">
+      <p id={`${f}-error`} role="alert" className="mt-2 text-xs text-red-300">
         {errors[f]}
       </p>
     ) : null;
 
   return (
-    <form onSubmit={onSubmit} noValidate className="space-y-8" aria-describedby={errors.form ? "form-error" : undefined}>
-      <div className="relative">
-        <input id="name" name="name" type="text" autoComplete="name" placeholder=" " required className={inputCls} aria-invalid={!!errors.name} aria-describedby={errors.name ? "name-error" : undefined} />
+    <form onSubmit={onSubmit} noValidate className="card space-y-6 p-6 sm:p-8" aria-describedby={errors.form ? "form-error" : undefined}>
+      {pkg && (
+        <p className="rounded-xl border border-neon/30 bg-neon/10 px-4 py-3 text-sm text-white">
+          الباقة المختارة: <span className="font-bold text-neon">{pkg}</span>
+        </p>
+      )}
+
+      <div>
         <label htmlFor="name" className={labelCls}>الاسم الكامل</label>
+        <input id="name" name="name" type="text" autoComplete="name" placeholder="مثال: محمد العتيبي" required className={inputCls} aria-invalid={!!errors.name} aria-describedby={errors.name ? "name-error" : undefined} />
         {err("name")}
       </div>
 
-      <div className="grid gap-8 sm:grid-cols-2">
-        <div className="relative">
-          <input id="email" name="email" type="email" autoComplete="email" inputMode="email" placeholder=" " required className={inputCls} aria-invalid={!!errors.email} aria-describedby={errors.email ? "email-error" : undefined} />
+      <div className="grid gap-6 sm:grid-cols-2">
+        <div>
           <label htmlFor="email" className={labelCls}>البريد الإلكتروني</label>
+          <input id="email" name="email" type="email" autoComplete="email" inputMode="email" placeholder="name@company.sa" required className={inputCls} aria-invalid={!!errors.email} aria-describedby={errors.email ? "email-error" : undefined} />
           {err("email")}
         </div>
-        <div className="relative">
-          <input id="whatsapp" name="whatsapp" type="tel" autoComplete="tel" inputMode="tel" placeholder=" " required className={inputCls} aria-invalid={!!errors.whatsapp} aria-describedby={errors.whatsapp ? "whatsapp-error" : undefined} />
+        <div>
           <label htmlFor="whatsapp" className={labelCls}>رقم الواتساب</label>
+          <input id="whatsapp" name="whatsapp" type="tel" autoComplete="tel" inputMode="tel" placeholder="05xxxxxxxx" required className={inputCls} aria-invalid={!!errors.whatsapp} aria-describedby={errors.whatsapp ? "whatsapp-error" : undefined} />
           {err("whatsapp")}
         </div>
       </div>
 
-      <div className="relative">
-        <select id="sector" name="sector" required defaultValue="" className={`${inputCls} appearance-none`} aria-invalid={!!errors.sector} aria-describedby={errors.sector ? "sector-error" : undefined}>
-          <option value="" disabled>
-            اختر القطاع
-          </option>
-          {sectorOptions.map((o) => (
-            <option key={o.value} value={o.value}>
-              {o.label}
+      <div>
+        <label htmlFor="sector" className={labelCls}>القطاع</label>
+        <div className="relative">
+          <select id="sector" name="sector" required defaultValue="" className={`${inputCls} appearance-none pe-10`} aria-invalid={!!errors.sector} aria-describedby={errors.sector ? "sector-error" : undefined}>
+            <option value="" disabled>
+              اختر القطاع
             </option>
-          ))}
-        </select>
-        <label htmlFor="sector" className="label pointer-events-none absolute start-0 top-0 text-muted">
-          القطاع
-        </label>
-        <span aria-hidden className="pointer-events-none absolute end-0 bottom-3 text-muted">
-          ⌄
-        </span>
+            {sectorOptions.map((o) => (
+              <option key={o.value} value={o.value} className="bg-navy">
+                {o.label}
+              </option>
+            ))}
+          </select>
+          <span aria-hidden className="pointer-events-none absolute end-4 top-1/2 -translate-y-1/2 text-muted">
+            ⌄
+          </span>
+        </div>
         {err("sector")}
       </div>
 
-      <div className="relative">
-        <textarea id="message" name="message" rows={5} placeholder=" " required className={`${inputCls} resize-y`} aria-invalid={!!errors.message} aria-describedby={errors.message ? "message-error" : undefined} />
+      <div>
         <label htmlFor="message" className={labelCls}>كيف يمكننا مساعدتك؟</label>
+        <textarea
+          id="message"
+          name="message"
+          rows={5}
+          required
+          placeholder="صف نشاطك وأكبر تحدٍّ تواجهه في الردّ على العملاء أو جلبهم"
+          defaultValue={pkg ? `أرغب في الاستفسار عن ${pkg}.\n` : ""}
+          className={`${inputCls} resize-y`}
+          aria-invalid={!!errors.message}
+          aria-describedby={errors.message ? "message-error" : undefined}
+        />
         {err("message")}
       </div>
 
@@ -126,7 +144,7 @@ export function ContactForm() {
       </div>
 
       {errors.form && (
-        <p id="form-error" role="alert" className="rounded-sm border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-700">
+        <p id="form-error" role="alert" className="rounded-xl border border-red-400/40 bg-red-500/10 px-4 py-3 text-sm text-red-200">
           {errors.form}
         </p>
       )}
@@ -135,7 +153,7 @@ export function ContactForm() {
         <button
           type="submit"
           disabled={status !== "idle"}
-          className="pill-gradient inline-flex h-12 items-center gap-2 rounded-full px-8 text-sm font-medium text-white transition disabled:cursor-not-allowed disabled:opacity-60"
+          className="btn-neon inline-flex h-12 items-center gap-2 rounded-full px-8 text-sm font-bold transition disabled:cursor-not-allowed disabled:opacity-60"
         >
           {status === "sending" ? "جارٍ الإرسال…" : status === "sent" ? "تم الإرسال" : "أرسل الطلب"} <span aria-hidden>↗</span>
         </button>

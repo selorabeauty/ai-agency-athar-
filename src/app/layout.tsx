@@ -1,34 +1,34 @@
 import type { Metadata } from "next";
-import { IBM_Plex_Sans_Arabic, Noto_Kufi_Arabic } from "next/font/google";
+import { Cairo, Tajawal } from "next/font/google";
 import "./globals.css";
-import { UtilityBar } from "@/components/layout/UtilityBar";
 import { Header } from "@/components/layout/Header";
 import { Footer } from "@/components/layout/Footer";
+import { site } from "@/lib/site";
 
-const display = IBM_Plex_Sans_Arabic({
+const display = Cairo({
   variable: "--font-display",
   subsets: ["arabic"],
-  weight: ["300", "400", "500"],
+  weight: ["600", "700", "800"],
   display: "swap",
 });
 
-const body = Noto_Kufi_Arabic({
+const body = Tajawal({
   variable: "--font-body",
   subsets: ["arabic"],
-  weight: ["300", "400", "500", "600"],
+  weight: ["400", "500", "700"],
   display: "swap",
 });
 
 export const metadata: Metadata = {
   title: {
-    default: "أثر للذكاء الاصطناعي — أنظمة تعمل لأجلك",
-    template: "%s | أثر للذكاء الاصطناعي",
+    default: `${site.name} — أنظمة ذكية تعمل لأجلك 24/7`,
+    template: `%s | ${site.name}`,
   },
   description:
-    "وكالة أثر: شات بوت واتساب بالذكاء الاصطناعي، تحسين الظهور في خرائط قوقل، ومواقع وأنظمة CRM مؤتمتة للعيادات ومكاتب المحاماة والمصانع في المملكة العربية السعودية.",
+    "نحول حضورك الرقمي إلى حجوزات وعملاء على مدار الساعة: شات بوت واتساب بالذكاء الاصطناعي، تحسين الظهور في خرائط قوقل، وأتمتة CRM للشركات في المملكة العربية السعودية.",
   openGraph: {
-    title: "أثر للذكاء الاصطناعي",
-    description: "حلول تقنية تبني الثقة وتضاعف المبيعات دون تدخل بشري.",
+    title: site.name,
+    description: "أنظمة ذكية تعمل لأجلك 24/7 — لأن كل استفسار بعد الدوام هو موعد ضائع ومبيعات ضائعة.",
     locale: "ar_SA",
     type: "website",
   },
@@ -41,11 +41,10 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="ar" dir="rtl" className={`${display.variable} ${body.variable}`}>
-      <body className="bg-white text-navy antialiased">
+      <body className="bg-navy text-white antialiased">
         <a href="#main" className="skip-link">
           تخطَّ إلى المحتوى
         </a>
-        <UtilityBar />
         <Header />
         <main id="main">{children}</main>
         <Footer />
