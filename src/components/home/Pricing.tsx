@@ -1,4 +1,4 @@
-import { consultationLink, freeMaintenancePromo, packages, whatsappLink } from "@/lib/site";
+import { consultationLink, freeMaintenance, freeMaintenancePromo, packages, whatsappLink } from "@/lib/site";
 import { Button } from "@/components/ui/Button";
 import { Reveal } from "@/components/ui/Reveal";
 import { SectionHeading } from "@/components/ui/SectionHeading";
@@ -45,6 +45,22 @@ export function Pricing() {
                   </li>
                 ))}
               </ul>
+
+              <div className="mt-6 rounded-2xl border border-neon/30 bg-neon/10 p-5">
+                <p className="text-sm font-bold text-neon">{freeMaintenance.title}</p>
+                <ul className="mt-3 space-y-2.5">
+                  {freeMaintenance.items.map((m) => (
+                    <li key={m} className="flex items-start gap-2.5 text-sm text-white/85">
+                      <span className="mt-1 flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-neon/15 text-neon">
+                        <CheckIcon className="h-3 w-3" />
+                      </span>
+                      {m}
+                    </li>
+                  ))}
+                </ul>
+                <p className="mt-3 text-xs leading-relaxed text-muted">ملاحظة: {freeMaintenance.note}</p>
+                <p className="mt-2 text-xs leading-relaxed text-white/80">{freeMaintenance.after}</p>
+              </div>
 
               <div className="mt-auto pt-8">
                 <Button href={whatsappLink(`مرحبًا، أرغب في طلب ${p.name} بسعر ${p.setup}.`)} variant={p.highlight ? "neon" : "outline"} className="w-full">
