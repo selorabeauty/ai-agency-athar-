@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
 import { useEffect, useRef, useState } from "react";
-import { nav, legalLinks, site } from "@/lib/site";
+import { consultationLink, nav, legalLinks, site } from "@/lib/site";
 import { Logo } from "./Logo";
 
 export function MobileMenu() {
@@ -102,9 +102,9 @@ export function MobileMenu() {
               </ul>
             </nav>
             <div className="container-x border-t border-line py-5">
-              <Link href="/contact" onClick={close} className="btn-neon flex h-12 items-center justify-center gap-2 rounded-full text-sm font-bold">
+              <a href={consultationLink} target="_blank" rel="noopener noreferrer" onClick={close} className="btn-neon flex h-12 items-center justify-center gap-2 rounded-full text-sm font-bold">
                 اطلب استشارة مجانية <span aria-hidden>↗</span>
-              </Link>
+              </a>
               <p className="mt-4 text-center text-xs text-muted" dir="ltr">
                 {site.email}
               </p>

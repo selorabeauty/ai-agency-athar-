@@ -23,10 +23,18 @@ export function Button({
   size?: "sm" | "md" | "lg";
 }) {
   const sizes = { sm: "h-10 px-4 text-sm", md: "h-11 px-6 text-sm", lg: "h-14 px-8 text-base" };
+  const cls = `inline-flex items-center justify-center gap-2 rounded-full font-medium transition-all duration-300 ${styles[variant]} ${sizes[size]} ${className}`;
+  if (/^https?:\/\//.test(href)) {
+    return (
+      <a href={href} target="_blank" rel="noopener noreferrer" className={cls}>
+        {children}
+      </a>
+    );
+  }
   return (
     <Link
       href={href}
-      className={`inline-flex items-center justify-center gap-2 rounded-full font-medium transition-all duration-300 ${styles[variant]} ${sizes[size]} ${className}`}
+      className={cls}
     >
       {children}
     </Link>

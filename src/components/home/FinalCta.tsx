@@ -1,4 +1,5 @@
 import { Button } from "@/components/ui/Button";
+import { consultationLink } from "@/lib/site";
 import { Reveal } from "@/components/ui/Reveal";
 
 export function FinalCta() {
@@ -14,7 +15,7 @@ export function FinalCta() {
           احجز استشارة مجانية، وسنريك خلال 20 دقيقة أين تضيع فرصك وكيف يبدو نظام يعمل لأجلك 24/7.
         </Reveal>
         <Reveal delay={0.16} className="mt-10 flex flex-col items-center justify-center gap-3 sm:flex-row">
-          <Button href="/contact" size="lg">
+          <Button href={consultationLink} size="lg">
             اطلب استشارة مجانية <span aria-hidden>↗</span>
           </Button>
           <Button href="/#pricing" variant="outline" size="lg">

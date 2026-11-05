@@ -3,7 +3,7 @@ import { PageHero } from "@/components/ui/PageHero";
 import { Reveal } from "@/components/ui/Reveal";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { Button } from "@/components/ui/Button";
-import { sectors, site } from "@/lib/site";
+import { consultationLink, sectors, site } from "@/lib/site";
 
 export const metadata: Metadata = {
   title: "من نحن",
@@ -62,7 +62,7 @@ export default function AboutPage() {
       <section>
         <div className="container-x flex flex-col items-start justify-between gap-8 py-20 lg:flex-row lg:items-center">
           <h2 className="max-w-xl text-[clamp(1.6rem,3.2vw,2.5rem)] leading-[1.3] text-white">جاهز لنظام يعمل لأجلك على مدار الساعة؟</h2>
-          <Button href="/contact" size="lg">
+          <Button href={consultationLink} size="lg">
             اطلب استشارة مجانية <span aria-hidden>↗</span>
           </Button>
         </div>

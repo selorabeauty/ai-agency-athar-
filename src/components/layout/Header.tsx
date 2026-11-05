@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { nav } from "@/lib/site";
+import { consultationLink, nav } from "@/lib/site";
 import { Button } from "@/components/ui/Button";
 import { Logo } from "./Logo";
 import { MobileMenu } from "./MobileMenu";
@@ -27,7 +27,7 @@ export function Header() {
 
         <div className="flex items-center gap-3">
           <div className="hidden sm:block">
-            <Button href="/contact" size="md">
+            <Button href={consultationLink} size="md">
               اطلب استشارة مجانية <span aria-hidden>↗</span>
             </Button>
           </div>

@@ -1,7 +1,7 @@
 "use client";
 
 import { motion, useReducedMotion } from "framer-motion";
-import { hero, sectors } from "@/lib/site";
+import { consultationLink, hero, sectors } from "@/lib/site";
 import { Button } from "@/components/ui/Button";
 import { editorialEase } from "@/lib/motion";
 
@@ -80,7 +80,7 @@ export function Hero() {
           </motion.p>
 
           <motion.div {...fade(0.24)} className="mt-9 flex flex-col gap-3 sm:flex-row sm:items-center">
-            <Button href="/contact" size="lg">
+            <Button href={consultationLink} size="lg">
               اطلب استشارة مجانية <span aria-hidden>↗</span>
             </Button>
             <Button href="/#pricing" variant="outline" size="lg">

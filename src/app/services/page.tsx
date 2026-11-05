@@ -3,7 +3,7 @@ import { PageHero } from "@/components/ui/PageHero";
 import { Reveal } from "@/components/ui/Reveal";
 import { Button } from "@/components/ui/Button";
 import { CheckIcon, serviceIcon } from "@/components/ui/Icons";
-import { services } from "@/lib/site";
+import { consultationLink, services } from "@/lib/site";
 
 export const metadata: Metadata = {
   title: "الخدمات",
@@ -64,7 +64,7 @@ export default function ServicesPage() {
         <div className="container-x flex flex-col items-start justify-between gap-8 py-20 lg:flex-row lg:items-center">
           <h2 className="max-w-xl text-[clamp(1.6rem,3.2vw,2.5rem)] leading-[1.3] text-white">أي نظام يناسب نشاطك؟ نرشّح لك الأنسب مجانًا.</h2>
           <div className="flex flex-col gap-3 sm:flex-row">
-            <Button href="/contact" size="lg">
+            <Button href={consultationLink} size="lg">
               اطلب استشارة مجانية <span aria-hidden>↗</span>
             </Button>
             <Button href="/#pricing" variant="outline" size="lg">
