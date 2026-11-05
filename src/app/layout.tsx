@@ -20,6 +20,7 @@ const body = Tajawal({
 });
 
 export const metadata: Metadata = {
+  metadataBase: new URL("https://atherdigitalagency.com"),
   title: {
     default: `${site.name} — أنظمة ذكية تعمل لأجلك 24/7`,
     template: `%s | ${site.name}`,
