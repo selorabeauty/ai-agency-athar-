@@ -68,7 +68,7 @@ const KV2 = ({ rows }: { rows: [string, ReactNode][] }) => (
   </table>
 );
 
-type Party = { title: string; name?: string; sig?: string; date?: string; note?: string };
+type Party = { title: string; name?: string; sig?: string; date?: string; dateNote?: string; note?: string };
 function Sign({ a, b }: { a: Party; b: Party }) {
   return (
     <div className="mt-5 flex gap-8">
@@ -85,7 +85,7 @@ function Sign({ a, b }: { a: Party; b: Party }) {
               BLANK
             )}
           </div>
-          <div>التاريخ: {p.date ? ltr(p.date) : BLANK}</div>
+          <div>التاريخ: {p.date ? ltr(p.date) : BLANK}{p.dateNote && ` ${p.dateNote}`}</div>
           {p.note && <div className="text-[9.5px] leading-[1.5] text-[#5a6b80]">{p.note}</div>}
         </div>
       ))}
@@ -101,7 +101,7 @@ const fmt = (iso: string) => {
       .formatToParts(new Date(iso))
       .map((x) => [x.type, x.value]),
   );
-  return `${parts.day}/${parts.month}/${parts.year} ${parts.hour}:${parts.minute} (توقيت السعودية)`;
+  return `${parts.day}/${parts.month}/${parts.year} ${parts.hour}:${parts.minute}`;
 };
 
 function parties(doc: DocModel, signed: SignInfo | undefined, aTitle: string, bTitle: string): [Party, Party] {
@@ -112,6 +112,7 @@ function parties(doc: DocModel, signed: SignInfo | undefined, aTitle: string, bT
       name: signed?.client.name,
       sig: signed?.client.image,
       date: signed ? fmt(signed.client.at) : undefined,
+      dateNote: signed ? "(بتوقيت السعودية)" : undefined,
       note: signed ? `وُقّع إلكترونياً عبر رابط التوقيع الآمن · المرجع: ${signed.ref}` : undefined,
     },
   ];
