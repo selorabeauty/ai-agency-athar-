@@ -1,9 +1,7 @@
 import type { Metadata } from "next";
-import { Suspense } from "react";
-import { ContactForm } from "@/components/contact/ContactForm";
 import { Reveal } from "@/components/ui/Reveal";
 import { SectionLabel } from "@/components/ui/SectionLabel";
-import { site } from "@/lib/site";
+import { consultationLink, site } from "@/lib/site";
 
 export const metadata: Metadata = {
   title: "اطلب استشارة مجانية",
@@ -31,7 +29,7 @@ export default function ContactPage() {
             أخبرنا أين يتسرّب عملاؤك، ونحن نوقف الهدر.
           </Reveal>
           <Reveal as="p" delay={0.1} className="mt-6 text-lg text-white/75">
-            املأ النموذج وسنعود إليك خلال يوم عمل بتشخيص أولي مجاني: ماذا يحدث لرسائلك بعد الدوام، وأين تظهر في خرائط الحي، وما النظام الأنسب لك.
+            راسلنا بضغطة زر على واتساب أو البريد، وسنعود إليك خلال يوم عمل بتشخيص أولي مجاني: ماذا يحدث لرسائلك بعد الدوام، وأين تظهر في خرائط الحي، وما النظام الأنسب لك.
           </Reveal>
           <Reveal delay={0.15} className="mt-10">
             <dl className="grid gap-5 sm:grid-cols-2">
@@ -47,9 +45,23 @@ export default function ContactPage() {
           </Reveal>
         </div>
         <div className="lg:col-span-7">
-          <Suspense fallback={<div className="card min-h-[480px]" aria-busy />}>
-            <ContactForm />
-          </Suspense>
+          <div className="card flex flex-col gap-5 p-8 sm:p-10">
+            <h2 className="text-2xl text-white">تواصل معنا مباشرة</h2>
+            <p className="text-white/75">اختر الطريقة الأنسب لك، وسيصلك ردّ فوري من مساعدنا الذكي على واتساب.</p>
+            <a href={consultationLink} target="_blank" rel="noopener noreferrer" className="btn-neon flex h-14 items-center justify-center gap-3 rounded-full text-base font-bold">
+              <svg viewBox="0 0 24 24" className="h-5 w-5" fill="none" stroke="currentColor" strokeWidth="1.8" aria-hidden>
+                <path d="M21 12a8 8 0 0 1-11.6 7.1L4 20l1-4.6A8 8 0 1 1 21 12Z" />
+              </svg>
+              تواصل عبر واتساب
+            </a>
+            <a href={`mailto:${site.email}?subject=${encodeURIComponent("طلب استشارة مجانية")}`} className="flex h-14 items-center justify-center gap-3 rounded-full border border-line text-base font-bold text-white transition hover:border-neon/60">
+              <svg viewBox="0 0 24 24" className="h-5 w-5 text-neon" fill="none" stroke="currentColor" strokeWidth="1.8" aria-hidden>
+                <rect x="3" y="5" width="18" height="14" rx="2" />
+                <path d="m3 7 9 6 9-6" />
+              </svg>
+              راسلنا على البريد
+            </a>
+          </div>
         </div>
       </div>
     </section>
