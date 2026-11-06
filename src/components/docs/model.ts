@@ -1,48 +1,27 @@
 import { freeMaintenance, packages } from "@/lib/site";
 
 export type Extra = { name: string; price: string };
-export type Form = {
-  client: string;
-  activity: string;
-  phone: string;
-  city: string;
-  clientId: string;
-  pkg: string;
-  extras: Extra[];
-  discount: string;
-  days: string;
-};
-export type Settings = { repName: string; repId: string; beneficiary: string; iban: string; updatesCap: string; signature: string };
+export type Form = { pkg: string; extras: Extra[]; discount: string; days: string; updatesCap: string };
 
 export type DocModel = {
   number: string;
   date: string;
-  client: string;
-  activity: string;
-  phone: string;
-  city: string;
-  clientId: string;
-  pkg: { name: string; features: string[]; setup: string };
+  pkg: { name: string; target: string; features: string[]; setup: string };
   extras: { name: string; price: number }[];
   discount: number;
   total: number;
   half: number;
   days: string;
-  rep: { name: string; id: string; beneficiary: string; iban: string };
   maintenanceTitle: string;
   maintenance: string[];
-  ownerSig: string;
 };
 
-export type ClientSignature = { name: string; image: string; at: string };
-
 export const BRAND = "آثر ديجيتال";
-export const BLANK = "________________";
 export const num = (v: string) => Number(v.replace(/[^\d.]/g, "")) || 0;
 export const money = (n: number) => `${n.toLocaleString("en-US")} ر.س`;
 export const ltr = (s: string) => `\u2066${s}\u2069`;
 
-export function buildDoc(form: Form, settings: Settings, meta: { number: string; date: string }): DocModel {
+export function buildDoc(form: Form, meta: { number: string; date: string }): DocModel {
   const pkg = packages.find((p) => p.id === form.pkg) ?? packages[0];
   const extras = form.extras.filter((e) => e.name.trim()).map((e) => ({ name: e.name.trim(), price: num(e.price) }));
   const subtotal = num(pkg.setup) + extras.reduce((s, e) => s + e.price, 0);
@@ -51,27 +30,20 @@ export function buildDoc(form: Form, settings: Settings, meta: { number: string;
   return {
     number: meta.number,
     date: meta.date,
-    client: form.client.trim(),
-    activity: form.activity.trim(),
-    phone: form.phone.trim(),
-    city: form.city.trim(),
-    clientId: form.clientId.trim(),
-    pkg: { name: pkg.name, features: [...pkg.features], setup: pkg.setup },
+    pkg: { name: pkg.name, target: pkg.target, features: [...pkg.features], setup: pkg.setup },
     extras,
     discount,
     total,
     half: Math.round(total / 2),
     days: form.days,
-    rep: { name: settings.repName, id: settings.repId, beneficiary: settings.beneficiary, iban: settings.iban },
     maintenanceTitle: freeMaintenance.title,
     maintenance: [
       freeMaintenance.items[0] + ".",
       freeMaintenance.items[1] + ".",
-      `عدد محدود من التحديثات الشهرية البسيطة (تعديل نصوص أو صور أو أسعار)، بحد أقصى ${settings.updatesCap || "____"} تحديثات شهرياً.`,
+      `عدد محدود من التحديثات الشهرية البسيطة (تعديل نصوص أو صور أو أسعار)، بحد أقصى ${form.updatesCap || "3"} تحديثات شهرياً.`,
       freeMaintenance.note,
       freeMaintenance.after,
     ],
-    ownerSig: settings.signature,
   };
 }
 
@@ -110,5 +82,3 @@ export async function shareOrDownload(files: { name: string; blob: Blob }[], tit
     a.click();
   }
 }
-
-export const safeName = (s: string) => s.trim().replace(/[\\/:*?"<>|]+/g, "-");
