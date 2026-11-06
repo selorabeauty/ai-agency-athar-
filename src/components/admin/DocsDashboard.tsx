@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useMemo, useRef, useState, type ReactNode } from "react";
+import { Fragment, useEffect, useMemo, useRef, useState, type ReactNode } from "react";
 import { freeMaintenance, packages, site } from "@/lib/site";
 
 type Extra = { name: string; price: string };
@@ -24,6 +24,7 @@ const emptyForm: Form = { client: "", activity: "", phone: "", city: "تبوك",
 const emptySettings: Settings = { repName: "", repId: "", beneficiary: "", iban: "", updatesCap: "3" };
 const BLANK = "________________";
 
+const BRAND = "آثر ديجيتال";
 const num = (v: string) => Number(v.replace(/[^\d.]/g, "")) || 0;
 const money = (n: number) => `${n.toLocaleString("en-US")} ر.س`;
 const ltr = (s: string) => `\u2066${s}\u2069`;
@@ -47,7 +48,7 @@ function Page({ children, id }: { children: ReactNode; id: string }) {
     >
       <div className="mb-4 flex items-center justify-between border-b-[3px] border-[#00b8e6] pb-3">
         <div className="text-[22px] font-extrabold text-[#0b1220]">
-          أثر <span className="text-[#00a6d6]">للذكاء الاصطناعي</span>
+          آثر <span className="text-[#00a6d6]">ديجيتال</span>
         </div>
         <div className="text-left text-[10.5px] leading-[1.6] text-[#556]">
           <div>واتساب: {ltr(site.phoneDisplay)}</div>
@@ -57,7 +58,7 @@ function Page({ children, id }: { children: ReactNode; id: string }) {
       </div>
       <div className="flex-1">{children}</div>
       <div className="mt-3 border-t border-[#dde] pt-2 text-center text-[10px] text-[#778]">
-        {site.name} · {site.city}
+        {BRAND} · {site.city}
       </div>
     </div>
   );
@@ -80,6 +81,22 @@ const KV = ({ rows }: { rows: [string, ReactNode][] }) => (
         <tr key={k}>
           <td className="w-[32%] border border-[#cfd8e3] bg-[#f5f8fb] px-2 py-1.5 font-bold">{k}</td>
           <td className="border border-[#cfd8e3] px-2 py-1.5">{v}</td>
+        </tr>
+      ))}
+    </tbody>
+  </table>
+);
+const KV2 = ({ rows }: { rows: [string, ReactNode][] }) => (
+  <table className="my-1.5 w-full border-collapse">
+    <tbody>
+      {Array.from({ length: Math.ceil(rows.length / 2) }, (_, i) => rows.slice(i * 2, i * 2 + 2)).map((pair) => (
+        <tr key={pair[0][0]}>
+          {pair.map(([k, v]) => (
+            <Fragment key={k}>
+              <td className="w-[15%] border border-[#cfd8e3] bg-[#f5f8fb] px-2 py-1.5 font-bold">{k}</td>
+              <td className="w-[35%] border border-[#cfd8e3] px-2 py-1.5">{v}</td>
+            </Fragment>
+          ))}
         </tr>
       ))}
     </tbody>
@@ -209,7 +226,7 @@ export function DocsDashboard() {
     const f = files.map((d) => new File([d.blob], d.name, { type: "application/pdf" }));
     if (navigator.canShare?.({ files: f })) {
       try {
-        await navigator.share({ files: f, title: `${site.short} — ${form.client}` });
+        await navigator.share({ files: f, title: `${BRAND} — ${form.client}` });
       } catch {}
     } else {
       files.forEach((d) => {
@@ -362,7 +379,7 @@ export function DocsDashboard() {
               <div ref={pagesRef} style={{ transform: "scale(0.62)", transformOrigin: "top right", width: 794 }} className="space-y-[20px]">
                 <Page id="quote-1">
                   <h1 className="mb-2 text-[21px] font-extrabold text-[#0b1220]">عرض سعر</h1>
-                  <KV
+                  <KV2
                     rows={[
                       ["رقم العرض", ltr(quoteNo)],
                       ["التاريخ", ltr(quoteDate)],
@@ -406,7 +423,8 @@ export function DocsDashboard() {
                     </tbody>
                   </table>
                   <p>جميع الأسعار دفعة واحدة، وليس عليها اشتراك شهري إلزامي.</p>
-                  <H>صيانة ودعم فني مجاني لمدة 3 أشهر</H>
+                  <H>الدعم والصيانة</H>
+                  <p className="font-bold">{freeMaintenance.title}</p>
                   <UL items={maintenance} />
                   <H>الدفع والتسليم</H>
                   <UL
@@ -418,7 +436,7 @@ export function DocsDashboard() {
                       "هذا العرض صالح لمدة 7 أيام من تاريخه.",
                     ]}
                   />
-                  <Sign a={`عن ${site.name}`} aName={settings.repName} b={`موافقة العميل: ${clientName}`} />
+                  <Sign a={`عن ${BRAND}`} aName={settings.repName} b={`موافقة العميل: ${clientName}`} />
                 </Page>
 
                 <Page id="contract-1">
@@ -426,7 +444,7 @@ export function DocsDashboard() {
                   <p>أُبرمت هذه الاتفاقية بتاريخ {ltr(quoteDate)} بين كلٍّ من:</p>
                   <KV
                     rows={[
-                      ["الطرف الأول (مقدّم الخدمة)", `${site.name}، ويمثلها: ${settings.repName || BLANK}، رقم الهوية: ${settings.repId || BLANK}`],
+                      ["الطرف الأول (مقدّم الخدمة)", `${BRAND}، ويمثلها: ${settings.repName || BLANK}، رقم الهوية: ${settings.repId || BLANK}`],
                       ["الطرف الثاني (العميل)", <>{clientName} — {form.activity || BLANK}، رقم الهوية / السجل التجاري: {form.clientId || BLANK}، الجوال: {form.phone ? ltr(form.phone) : BLANK}</>],
                     ]}
                   />
@@ -453,7 +471,8 @@ export function DocsDashboard() {
                       "يُعدّ الموقع مُسلَّماً عند نشره وإبلاغ العميل، أو بعد 5 أيام من إرسال رابط المعاينة دون ملاحظات.",
                     ]}
                   />
-                  <H>4. الصيانة المجانية (3 أشهر من تاريخ التسليم)</H>
+                  <H>4. الدعم والصيانة</H>
+                  <p className="font-bold">{freeMaintenance.title}</p>
                   <UL items={maintenance} />
                 </Page>
 
@@ -474,7 +493,7 @@ export function DocsDashboard() {
                   <p>لا يتحمل الطرف الأول مسؤولية الأعطال الناتجة عن مزودي الخدمات الخارجية (الاستضافة، Meta، Google، OpenAI) أو عن تعديلات يجريها الطرف الثاني أو غيره على الموقع، ولا تتجاوز مسؤوليته في جميع الأحوال قيمة هذه الاتفاقية.</p>
                   <H>9. أحكام عامة</H>
                   <p>تخضع هذه الاتفاقية لأنظمة المملكة العربية السعودية، ويُسعى لحل أي خلاف ودياً أولاً. حُررت من نسختين بيد كل طرف نسخة.</p>
-                  <Sign a={`الطرف الأول: ${site.name}`} aName={settings.repName} b={`الطرف الثاني: ${clientName}`} />
+                  <Sign a={`الطرف الأول: ${BRAND}`} aName={settings.repName} b={`الطرف الثاني: ${clientName}`} />
                 </Page>
               </div>
             </div>

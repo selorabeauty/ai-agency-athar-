@@ -24,7 +24,7 @@ export function Pricing() {
               className={`card card-hover relative flex flex-col p-7 sm:p-8 ${p.highlight ? "border-neon/60 shadow-[0_30px_90px_-40px_rgba(0,212,255,0.6)] lg:-translate-y-3" : ""}`}
             >
               {p.highlight && (
-                <span className="absolute -top-3.5 start-7 rounded-full bg-neon px-3 py-1 text-xs font-bold text-navy">الأكثر طلبًا</span>
+                <span className="absolute -top-3.5 start-7 rounded-full bg-neon px-3 py-1 text-xs font-bold text-navy">الأكثر مبيعاً</span>
               )}
               <h3 className="text-2xl font-extrabold text-white">{p.name}</h3>
               <p className="mt-2 min-h-12 text-sm text-muted">{p.target}</p>
