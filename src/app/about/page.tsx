@@ -29,7 +29,7 @@ export default function AboutPage() {
       <section className="border-b border-line">
         <div className="container-x grid gap-12 py-20 lg:grid-cols-12 lg:py-28">
           <div className="lg:col-span-5">
-            <SectionHeading label="قصتنا" title="من الرياض، لأصحاب الأعمال الذين لا يملكون وقتًا لتفويت عميل" />
+            <SectionHeading label="قصتنا" title="من تبوك، لأصحاب الأعمال الذين لا يملكون وقتًا لتفويت عميل" />
           </div>
           <div className="space-y-6 text-lg leading-relaxed text-white/75 lg:col-span-7">
             <Reveal as="p">

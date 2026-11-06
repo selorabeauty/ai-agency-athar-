@@ -68,7 +68,7 @@ export function Hero() {
               <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-neon opacity-70" />
               <span className="relative inline-flex h-2 w-2 rounded-full bg-neon" />
             </span>
-            يعمل الآن · الرياض
+            يعمل الآن · تبوك
           </motion.div>
 
           <motion.h1 {...fade(0.08)} id="hero-heading" className="mt-6 text-[clamp(2.25rem,5.5vw,4.5rem)] font-extrabold leading-[1.2] text-white">

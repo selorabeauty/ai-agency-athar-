@@ -11,7 +11,7 @@ export const metadata: Metadata = {
 const facts = [
   ["البريد الرسمي", site.email, true],
   ["واتساب", site.phoneDisplay, false],
-  ["المقر", site.city, false],
+  ["المدينة", site.city, false],
   ["ساعات الردّ البشري", "الأحد — الخميس، 9 ص — 6 م", false],
   ["المساعد الذكي", "متاح 24/7", false],
 ] as const;
