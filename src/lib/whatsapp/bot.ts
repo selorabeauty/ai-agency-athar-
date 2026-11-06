@@ -61,7 +61,7 @@ const tools = [
 
 const toLocalPhone = (waId: string) => (waId.startsWith("966") ? `0${waId.slice(3)}` : `+${waId}`);
 
-async function notifyTeam(subject: string, rows: [string, string][]) {
+export async function notifyTeam(subject: string, rows: [string, string][]) {
   const text = rows.map(([k, v]) => `${k}: ${v}`).join("\n");
   const apiKey = process.env.RESEND_API_KEY;
   const owner = process.env.WHATSAPP_OWNER_NUMBER?.replace(/\D/g, "");
