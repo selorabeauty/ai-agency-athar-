@@ -7,14 +7,14 @@ import { site } from "@/lib/site";
 
 const display = Cairo({
   variable: "--font-display",
-  subsets: ["arabic"],
+  subsets: ["arabic", "latin"],
   weight: ["600", "700", "800"],
   display: "swap",
 });
 
 const body = Tajawal({
   variable: "--font-body",
-  subsets: ["arabic"],
+  subsets: ["arabic", "latin"],
   weight: ["400", "500", "700"],
   display: "swap",
 });
