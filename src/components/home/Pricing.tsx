@@ -21,10 +21,10 @@ export function Pricing() {
             <Reveal
               key={p.id}
               delay={0.08 * i}
-              className={`card card-hover relative flex flex-col p-7 sm:p-8 ${p.highlight ? "border-neon/60 shadow-[0_30px_90px_-40px_rgba(0,212,255,0.6)] lg:-translate-y-3" : ""}`}
+              className={`card card-hover relative flex flex-col p-7 sm:p-8 ${p.badge ? "border-neon/60 shadow-[0_30px_90px_-40px_rgba(0,212,255,0.6)] lg:-translate-y-3" : ""}`}
             >
-              {p.highlight && (
-                <span className="absolute -top-3.5 start-7 rounded-full bg-neon px-3 py-1 text-xs font-bold text-navy">الأكثر مبيعاً</span>
+              {p.badge && (
+                <span className="absolute -top-3.5 start-7 rounded-full bg-neon px-3 py-1 text-xs font-bold text-navy">{p.badge}</span>
               )}
               <h3 className="text-2xl font-extrabold text-white">{p.name}</h3>
               <p className="mt-2 min-h-12 text-sm text-muted">{p.target}</p>
@@ -46,24 +46,14 @@ export function Pricing() {
                 ))}
               </ul>
 
-              <div className="mt-6 rounded-2xl border border-neon/30 bg-neon/10 p-5">
-                <p className="text-sm font-bold text-neon">{freeMaintenance.title}</p>
-                <ul className="mt-3 space-y-2.5">
-                  {freeMaintenance.items.map((m) => (
-                    <li key={m} className="flex items-start gap-2.5 text-sm text-white/85">
-                      <span className="mt-1 flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-neon/15 text-neon">
-                        <CheckIcon className="h-3 w-3" />
-                      </span>
-                      {m}
-                    </li>
-                  ))}
-                </ul>
-                <p className="mt-3 text-xs leading-relaxed text-muted">ملاحظة: {freeMaintenance.note}</p>
-                <p className="mt-2 text-xs leading-relaxed text-white/80">{freeMaintenance.after}</p>
+              <div className="mt-6 rounded-2xl border border-neon/30 bg-neon/10 p-4 text-xs leading-relaxed text-white/80">
+                <p className="font-bold text-neon">دعم وصيانة مجانية: {p.support}</p>
+                <p className="mt-1.5">{freeMaintenance.after}</p>
+                <p className="mt-1 text-muted">ملاحظة: {freeMaintenance.note}</p>
               </div>
 
               <div className="mt-auto pt-8">
-                <Button href={whatsappLink(`مرحبًا، أرغب في طلب ${p.name} بسعر ${p.setup}.`)} variant={p.highlight ? "neon" : "outline"} className="w-full">
+                <Button href={whatsappLink(`مرحبًا، أرغب في طلب ${p.name} بسعر ${p.setup}.`)} variant={p.badge ? "neon" : "outline"} className="w-full">
                   ابدأ بهذه الباقة <span aria-hidden>↗</span>
                 </Button>
               </div>

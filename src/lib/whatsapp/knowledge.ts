@@ -14,7 +14,7 @@ export const knowledgeBase = [
   ...services.map((s) => `• ${s.title}: ${s.description}\n${lines(s.bullets)}\nالنتيجة: ${s.outcome}`),
   "",
   "الباقات (أسعار تأسيس ثابتة، دفعة واحدة، بدون اشتراك شهري إجباري):",
-  ...packages.map((p) => `• ${p.name} — ${p.setup} (${p.setupNote}) — ${p.target}\n${lines(p.features)}`),
+  ...packages.map((p) => `• ${p.name} — ${p.setup} (${p.setupNote}) — ${p.target}${p.badge ? ` — ${p.badge}` : ""}\n${lines(p.features)}`),
   "",
   freeMaintenancePromo,
   freeMaintenance.title,

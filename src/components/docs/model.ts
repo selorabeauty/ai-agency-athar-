@@ -36,7 +36,7 @@ export function buildDoc(form: Form, meta: { number: string; date: string }): Do
     total,
     half: Math.round(total / 2),
     days: form.days,
-    maintenanceTitle: freeMaintenance.title,
+    maintenanceTitle: `${pkg.support} دعم وصيانة شاملة للتشغيل (مجاناً) من تاريخ الإطلاق، يشمل:`,
     maintenance: [
       freeMaintenance.items[0] + ".",
       freeMaintenance.items[1] + ".",
