@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import Link from "next/link";
 import { AccessGuide } from "./AccessGuide";
 import { DropZone } from "./DropZone";
@@ -50,6 +50,10 @@ export function OnboardingForm() {
   const [progress, setProgress] = useState<number | null>(null);
   const [ref, setRef] = useState("");
 
+  useEffect(() => {
+    if (ref) window.scrollTo({ top: 0 });
+  }, [ref]);
+
   const type = businessTypes.find((b) => b.id === typeId);
   const totalBytes = useMemo(() => Object.values(files).flat().reduce((s, f) => s + f.size, 0), [files]);
   const set = (k: keyof typeof v) => (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => setV((s) => ({ ...s, [k]: e.target.value }));
@@ -93,8 +97,7 @@ export function OnboardingForm() {
         res = JSON.parse(xhr.responseText);
       } catch {}
       if (xhr.status === 200 && res.ok) {
-        setRef(res.ref || "");
-        window.scrollTo({ top: 0, behavior: "smooth" });
+        setRef(res.ref || "-");
       } else {
         setErrors(res.fields ?? {});
         setError(res.error || (xhr.status === 413 ? "حجم الملفات كبير جداً، قلّل عدد الصور وحاول مرة ثانية." : "تعذّر الإرسال، حاول مرة ثانية."));
