@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { DocsDashboard } from "@/components/admin/DocsDashboard";
 
 export const metadata: Metadata = {
-  title: "لوحة العروض والعقود",
+  title: "لوحة عروض الأسعار",
   robots: { index: false, follow: false },
 };
 

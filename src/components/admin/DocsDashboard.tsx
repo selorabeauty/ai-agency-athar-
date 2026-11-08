@@ -2,6 +2,7 @@
 
 import { useEffect, useMemo, useRef, useState } from "react";
 import { packages } from "@/lib/site";
+import { AdminNav } from "./AdminNav";
 import { QuotePage } from "@/components/docs/DocPages";
 import { buildDoc, BRAND, money, renderPdf, shareOrDownload, type Form } from "@/components/docs/model";
 
@@ -65,6 +66,7 @@ export function DocsDashboard() {
 
   return (
     <section className="container-x py-10 lg:py-14">
+      <AdminNav active="/admin" />
       <h1 className="text-2xl text-white lg:text-3xl">لوحة عروض الأسعار</h1>
       <p className="mt-2 text-sm text-white/70">اختر الباقة والإضافات، ويطلع لك عرض سعر PDF جاهز ترسله على الواتساب.</p>
 
