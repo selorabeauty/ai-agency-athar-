@@ -100,7 +100,7 @@ export function HotelDemo() {
 
   const addBooking = useCallback(
     (b: Omit<Booking, "id">, id?: string) => {
-      const bid = id ?? `RL-${nextId.current++}`;
+      const bid = id ?? `MW-${nextId.current++}`;
       setBookings((bs) => [{ ...b, id: bid }, ...bs]);
       setUnread((u) => u + 1);
       return bid;
@@ -230,7 +230,7 @@ export function HotelDemo() {
 function Brand({ dark }: { dark?: boolean }) {
   return (
     <div className="flex items-center gap-3">
-      <span className="flex h-11 w-11 items-center justify-center rounded-2xl bg-gradient-to-br from-fuchsia-500 to-violet-700 font-display text-xl font-extrabold text-white shadow-lg shadow-violet-900/30">ر</span>
+      <span className="flex h-11 w-11 items-center justify-center rounded-2xl bg-gradient-to-br from-fuchsia-500 to-violet-700 font-display text-xl font-extrabold text-white shadow-lg shadow-violet-900/30">م</span>
       <div>
         <p className={`font-display text-lg font-extrabold leading-tight ${dark ? "text-slate-900" : "text-white"}`}>{HOTEL}</p>
         <p className={`text-[11px] ${dark ? "text-violet-600" : "text-violet-200"}`}>منصة الإدارة الذكية</p>
@@ -573,7 +573,7 @@ function Assistant({ onBook }: { onBook: () => string }) {
       setTyping(true);
       await new Promise((r) => setTimeout(r, 900 + Math.min(line.length * 12, 900)));
       setTyping(false);
-      const text = s.books && line.includes("RL-4822") ? line.replace("RL-4822", onBook()) : line;
+      const text = s.books && line.includes("MW-4822") ? line.replace("MW-4822", onBook()) : line;
       setMsgs((m) => [...m, { from: "bot", text }]);
       await new Promise((r) => setTimeout(r, 250));
     }
@@ -584,7 +584,7 @@ function Assistant({ onBook }: { onBook: () => string }) {
       <div className="xl:col-span-2">
         <div className="mx-auto max-w-sm overflow-hidden rounded-[2.2rem] border-[6px] border-[#2e1065] bg-[#efeae2] shadow-2xl">
           <div className="flex items-center gap-3 bg-[#3b0f80] px-4 py-3 text-white">
-            <span className="flex h-9 w-9 items-center justify-center rounded-full bg-gradient-to-br from-fuchsia-500 to-violet-700 font-bold">ر</span>
+            <span className="flex h-9 w-9 items-center justify-center rounded-full bg-gradient-to-br from-fuchsia-500 to-violet-700 font-bold">م</span>
             <div className="flex-1">
               <p className="text-sm font-bold">{HOTEL}</p>
               <p className="text-[10px] text-violet-200">{typing ? "يكتب..." : "مساعد ذكي • متصل الآن"}</p>
@@ -703,7 +703,7 @@ function Reputation({ notify }: { notify: (t: string) => void }) {
         <div className={`${card} lg:col-span-2`}>
           <Title sub="ترتيب الفندق في نتائج البحث المحلية">الكلمات اللي يلقونكم فيها</Title>
           <ul className="space-y-3">
-            {[["فندق قريب مني", 2, 9], ["أجنحة فندقية عائلية", 1, 6], ["فندق 4 نجوم", 3, 11], ["فندق مع فطور", 2, 8], ["hotel near me", 4, 15]].map(([k, now, before]) => (
+            {[["فندق في الوجه", 1, 7], ["أجنحة عائلية الوجه", 1, 6], ["فندق 4 نجوم", 3, 11], ["فندق مع فطور", 2, 8], ["hotel near me", 4, 15]].map(([k, now, before]) => (
               <li key={k as string} className="flex items-center justify-between gap-2 text-sm">
                 <span className="text-slate-700" dir={/^[A-Za-z]/.test(k as string) ? "ltr" : "rtl"}>{k}</span>
                 <span className="flex items-center gap-2 text-xs">
