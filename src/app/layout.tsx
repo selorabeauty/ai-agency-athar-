@@ -1,8 +1,6 @@
 import type { Metadata } from "next";
 import { Cairo, Tajawal } from "next/font/google";
 import "./globals.css";
-import { Header } from "@/components/layout/Header";
-import { Footer } from "@/components/layout/Footer";
 import { site } from "@/lib/site";
 
 const display = Cairo({
@@ -42,14 +40,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="ar" dir="rtl" className={`${display.variable} ${body.variable}`}>
-      <body className="bg-navy text-white antialiased">
-        <a href="#main" className="skip-link">
-          تخطَّ إلى المحتوى
-        </a>
-        <Header />
-        <main id="main">{children}</main>
-        <Footer />
-      </body>
+      <body className="antialiased">{children}</body>
     </html>
   );
 }
