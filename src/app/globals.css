@@ -142,3 +142,8 @@ input[type="range"] {
   outline: 2px solid var(--color-neon);
   outline-offset: 3px;
 }
+
+.font-tajawal,
+.font-tajawal :is(h1, h2, h3, h4, .font-display) {
+  font-family: var(--font-body);
+}
