@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { LawDemo } from "@/components/demo/law/LawDemo";
+import { reemFirm } from "@/components/demo/law/data";
 
 export const metadata: Metadata = {
   title: "لوحة تحكم مكتب المحامية ريم مسند البلوي — عرض تجريبي",
@@ -15,5 +16,5 @@ export const metadata: Metadata = {
 };
 
 export default function ReemAlbalawiDemoPage() {
-  return <LawDemo />;
+  return <LawDemo firm={reemFirm} />;
 }

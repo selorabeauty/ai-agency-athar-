@@ -1,11 +1,11 @@
 "use client";
 
 import { AnimatePresence, motion } from "framer-motion";
-import { useCallback, useMemo, useRef, useState } from "react";
+import { createContext, useCallback, useContext, useMemo, useRef, useState } from "react";
 import { whatsappLink } from "@/lib/site";
 import {
-  categories, FIRM, FIRM_SHORT, FIRST_WEEKDAY, initialAppointments, keywords, leadsByCategory, modes, MONTH, MONTH_DAYS, monthlyVisitors, regions, sources, statusMeta, TODAY,
-  type Appointment, type Category, type Mode, type Status,
+  categories, FIRST_WEEKDAY, initialAppointments, leadsByCategory, modes, MONTH, MONTH_DAYS, monthlyVisitors, regions, sources, statusMeta, TODAY,
+  type Appointment, type Category, type LawFirm, type Mode, type Status,
 } from "./data";
 
 type Tab = "overview" | "appointments" | "clients" | "seo";
@@ -24,13 +24,28 @@ const tabs: { id: Tab; label: string }[] = [
   { id: "seo", label: "تحليل SEO وأداء الموقع" },
 ];
 
+const FirmCtx = createContext<LawFirm | null>(null);
+const useFirm = () => useContext(FirmCtx)!;
+
+export function LawDemo({ firm }: { firm: LawFirm }) {
+  const t = firm.theme;
+  const vars = { "--law-ink": t.ink, "--law-ink2": t.ink2, "--law-accent": t.accent, "--law-accent2": t.accent2, "--law-accent-dark": t.accentDark, "--law-accent-soft": t.accentSoft, "--law-bg": t.bg } as React.CSSProperties;
+  return (
+    <FirmCtx.Provider value={firm}>
+      <div style={vars}>
+        <LawDemoInner />
+      </div>
+    </FirmCtx.Provider>
+  );
+}
+
 const weekdays = ["الأحد", "الاثنين", "الثلاثاء", "الأربعاء", "الخميس", "الجمعة", "السبت"];
 const shortDays = ["أحد", "إثنين", "ثلاثاء", "أربعاء", "خميس", "جمعة", "سبت"];
 const card = "rounded-2xl border border-slate-200/80 bg-white p-5 shadow-[0_8px_30px_-20px_rgba(15,31,61,0.35)] sm:p-6";
 const btn = "inline-flex items-center justify-center gap-1.5 rounded-xl px-4 py-2.5 text-xs font-bold transition active:scale-[0.98]";
-const primary = `${btn} bg-[#0f1f3d] text-white hover:bg-[#162b52]`;
-const gold = `${btn} bg-gradient-to-l from-[#b08d57] to-[#c9a96e] text-white shadow-md shadow-[#b08d57]/25 hover:brightness-105`;
-const ghost = `${btn} border border-slate-200 text-slate-700 hover:border-[#b08d57] hover:text-[#8a6a3a]`;
+const primary = `${btn} bg-(--law-ink) text-white hover:bg-(--law-ink2)`;
+const gold = `${btn} bg-gradient-to-l from-(--law-accent) to-(--law-accent2) text-white shadow-md shadow-(--law-accent)/25 hover:brightness-105`;
+const ghost = `${btn} border border-slate-200 text-slate-700 hover:border-(--law-accent) hover:text-(--law-accent-dark)`;
 const mins = (t: string) => {
   const [h, m] = t.split(" ")[0].split(":").map(Number);
   return ((h % 12) + (t.endsWith("م") ? 12 : 0)) * 60 + m;
@@ -50,7 +65,7 @@ function Title({ children, sub, end }: { children: React.ReactNode; sub?: string
   return (
     <div className="mb-4 flex items-start justify-between gap-3">
       <div>
-        <h3 className="text-base text-[#0f1f3d] sm:text-lg">{children}</h3>
+        <h3 className="text-base text-(--law-ink) sm:text-lg">{children}</h3>
         {sub && <p className="text-xs text-slate-500">{sub}</p>}
       </div>
       {end}
@@ -67,9 +82,9 @@ function Kpi({ label, value, sub, icon }: { label: string; value: string; sub: s
     <div className={card}>
       <div className="flex items-start justify-between gap-2">
         <p className="text-xs text-slate-500">{label}</p>
-        <span className="rounded-xl bg-[#b08d57]/10 p-2 text-[#8a6a3a]"><Icon d={icon} className="h-4 w-4" /></span>
+        <span className="rounded-xl bg-(--law-accent)/10 p-2 text-(--law-accent-dark)"><Icon d={icon} className="h-4 w-4" /></span>
       </div>
-      <b className="mt-1 block font-display text-2xl text-[#0f1f3d] sm:text-3xl">{value}</b>
+      <b className="mt-1 block font-display text-2xl text-(--law-ink) sm:text-3xl">{value}</b>
       <p className="mt-1 text-xs font-bold text-emerald-700">{sub}</p>
     </div>
   );
@@ -81,9 +96,9 @@ function Bars({ values, labels }: { values: number[]; labels: string[] }) {
     <div className="flex h-48 items-end gap-2 sm:gap-4">
       {values.map((v, i) => (
         <div key={labels[i]} className="group flex h-full flex-1 flex-col items-center gap-1.5">
-          <span className="text-[10px] font-bold text-[#8a6a3a]">{v.toLocaleString("en-US")}</span>
+          <span className="text-[10px] font-bold text-(--law-accent-dark)">{v.toLocaleString("en-US")}</span>
           <div className="relative w-full flex-1">
-            <motion.div initial={{ height: 0 }} animate={{ height: `${(v / max) * 100}%` }} transition={{ duration: 0.7, delay: i * 0.05 }} className={`absolute inset-x-0 bottom-0 rounded-t-lg ${i === values.length - 1 ? "bg-gradient-to-t from-[#9a7748] to-[#c9a96e]" : "bg-[#0f1f3d]/85 group-hover:bg-[#0f1f3d]"}`} />
+            <motion.div initial={{ height: 0 }} animate={{ height: `${(v / max) * 100}%` }} transition={{ duration: 0.7, delay: i * 0.05 }} className={`absolute inset-x-0 bottom-0 rounded-t-lg ${i === values.length - 1 ? "bg-gradient-to-t from-(--law-accent-dark) to-(--law-accent2)" : "bg-(--law-ink)/85 group-hover:bg-(--law-ink)"}`} />
           </div>
           <span className="text-[10px] text-slate-500">{labels[i]}</span>
         </div>
@@ -95,15 +110,16 @@ function Bars({ values, labels }: { values: number[]; labels: string[] }) {
 function Meter({ label, value, max = 100, suffix = "%" }: { label: string; value: number; max?: number; suffix?: string }) {
   return (
     <div>
-      <div className="mb-1.5 flex justify-between text-xs"><span className="text-slate-600">{label}</span><b className="text-[#0f1f3d]">{value}{suffix}</b></div>
+      <div className="mb-1.5 flex justify-between text-xs"><span className="text-slate-600">{label}</span><b className="text-(--law-ink)">{value}{suffix}</b></div>
       <div className="h-2 overflow-hidden rounded-full bg-slate-100">
-        <motion.div initial={{ width: 0 }} animate={{ width: `${(value / max) * 100}%` }} transition={{ duration: 0.8 }} className="h-full rounded-full bg-gradient-to-l from-[#0f1f3d] to-[#b08d57]" />
+        <motion.div initial={{ width: 0 }} animate={{ width: `${(value / max) * 100}%` }} transition={{ duration: 0.8 }} className="h-full rounded-full bg-gradient-to-l from-(--law-ink) to-(--law-accent)" />
       </div>
     </div>
   );
 }
 
-export function LawDemo() {
+function LawDemoInner() {
+  const firm = useFirm();
   const [tab, setTab] = useState<Tab>("overview");
   const [collapsed, setCollapsed] = useState(false);
   const [drawer, setDrawer] = useState(false);
@@ -142,7 +158,7 @@ export function LawDemo() {
   const nav = (compact: boolean) => (
     <nav className="mt-8 space-y-1.5">
       {tabs.map((t) => (
-        <button key={t.id} type="button" onClick={() => go(t.id)} title={t.label} className={`flex w-full items-center gap-3 rounded-xl px-3.5 py-3 text-sm font-bold transition ${compact ? "justify-center" : ""} ${tab === t.id ? "bg-white text-[#0f1f3d] shadow-lg" : "text-slate-300 hover:bg-white/10"}`}>
+        <button key={t.id} type="button" onClick={() => go(t.id)} title={t.label} className={`flex w-full items-center gap-3 rounded-xl px-3.5 py-3 text-sm font-bold transition ${compact ? "justify-center" : ""} ${tab === t.id ? "bg-white text-(--law-ink) shadow-lg" : "text-slate-300 hover:bg-white/10"}`}>
           <Icon d={icons[t.id]} />
           {!compact && <span className="flex-1 text-start">{t.label}</span>}
         </button>
@@ -151,13 +167,13 @@ export function LawDemo() {
   );
 
   return (
-    <div className="min-h-screen bg-[#f6f5f1] text-slate-800" style={{ colorScheme: "light" }}>
-      <div className="bg-[#0f1f3d] px-4 py-2 text-center text-[11px] font-bold text-[#e6d3ae] sm:text-xs">
+    <div className="min-h-screen bg-(--law-bg) text-slate-800" style={{ colorScheme: "light" }}>
+      <div className="bg-(--law-ink) px-4 py-2 text-center text-[11px] font-bold text-(--law-accent-soft) sm:text-xs">
         عرض تجريبي مقدّم من آثر ديجيتال — جميع الأسماء والأرقام توضيحية
       </div>
 
       <div className="flex">
-        <aside className={`sticky top-0 hidden h-screen shrink-0 flex-col bg-[#0f1f3d] p-4 text-white transition-[width] duration-300 lg:flex ${collapsed ? "w-20" : "w-72"}`}>
+        <aside className={`sticky top-0 hidden h-screen shrink-0 flex-col bg-(--law-ink) p-4 text-white transition-[width] duration-300 lg:flex ${collapsed ? "w-20" : "w-72"}`}>
           <Brand compact={collapsed} />
           {nav(collapsed)}
           <button type="button" onClick={() => setCollapsed((c) => !c)} className="mt-auto flex items-center justify-center gap-2 rounded-xl border border-white/10 py-2.5 text-xs text-slate-300 hover:bg-white/5" aria-label={collapsed ? "توسيع القائمة" : "طي القائمة"}>
@@ -169,8 +185,8 @@ export function LawDemo() {
         <AnimatePresence>
           {drawer && (
             <>
-              <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} onClick={() => setDrawer(false)} className="fixed inset-0 z-40 bg-[#0f1f3d]/50 backdrop-blur-sm lg:hidden" />
-              <motion.aside initial={{ x: "100%" }} animate={{ x: 0 }} exit={{ x: "100%" }} transition={{ type: "tween", duration: 0.25 }} className="fixed inset-y-0 start-0 z-50 flex w-72 flex-col bg-[#0f1f3d] p-4 text-white lg:hidden">
+              <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} onClick={() => setDrawer(false)} className="fixed inset-0 z-40 bg-(--law-ink)/50 backdrop-blur-sm lg:hidden" />
+              <motion.aside initial={{ x: "100%" }} animate={{ x: 0 }} exit={{ x: "100%" }} transition={{ type: "tween", duration: 0.25 }} className="fixed inset-y-0 start-0 z-50 flex w-72 flex-col bg-(--law-ink) p-4 text-white lg:hidden">
                 <div className="flex items-start justify-between"><Brand /><button type="button" onClick={() => setDrawer(false)} className="p-1 text-slate-300" aria-label="إغلاق القائمة"><Icon d="M18 6 6 18M6 6l12 12" /></button></div>
                 {nav(false)}
               </motion.aside>
@@ -182,10 +198,10 @@ export function LawDemo() {
           <header className="sticky top-0 z-30 border-b border-slate-200 bg-white/90 backdrop-blur">
             <div className="flex items-center justify-between gap-3 px-4 py-3 sm:px-6">
               <div className="flex items-center gap-3">
-                <button type="button" onClick={() => setDrawer(true)} className="rounded-xl border border-slate-200 p-2 text-[#0f1f3d] lg:hidden" aria-label="فتح القائمة"><Icon d="M4 6h16M4 12h16M4 18h16" /></button>
+                <button type="button" onClick={() => setDrawer(true)} className="rounded-xl border border-slate-200 p-2 text-(--law-ink) lg:hidden" aria-label="فتح القائمة"><Icon d="M4 6h16M4 12h16M4 18h16" /></button>
                 <div>
-                  <h1 className="text-lg text-[#0f1f3d] sm:text-xl">{current.label}</h1>
-                  <p className="text-[11px] text-slate-500 sm:text-xs">{FIRM}</p>
+                  <h1 className="text-lg text-(--law-ink) sm:text-xl">{current.label}</h1>
+                  <p className="line-clamp-1 text-[11px] text-slate-500 sm:text-xs">{firm.name}</p>
                 </div>
               </div>
               <div className="flex items-center gap-2">
@@ -205,7 +221,7 @@ export function LawDemo() {
               </motion.div>
             </AnimatePresence>
             <Cta />
-            <p className="mt-8 text-center text-[11px] text-slate-400">صُممت هذه المنصة التجريبية لـ {FIRM} بواسطة آثر ديجيتال • لا تتضمن أي بيانات قضايا أو مستندات قانونية • الأرقام للعرض فقط</p>
+            <p className="mt-8 text-center text-[11px] text-slate-400">صُممت هذه المنصة التجريبية لـ {firm.name} بواسطة آثر ديجيتال • لا تتضمن أي بيانات قضايا أو مستندات قانونية • الأرقام للعرض فقط</p>
           </main>
         </div>
       </div>
@@ -214,8 +230,8 @@ export function LawDemo() {
 
       <AnimatePresence>
         {toast && (
-          <motion.div initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: 30 }} className="fixed inset-x-4 bottom-5 z-[60] mx-auto flex max-w-md items-center gap-3 rounded-2xl bg-[#0f1f3d] p-4 text-sm text-white shadow-2xl">
-            <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-[#b08d57]"><Icon d="m5 12 5 5L20 7" className="h-4 w-4" /></span>
+          <motion.div initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: 30 }} className="fixed inset-x-4 bottom-5 z-[60] mx-auto flex max-w-md items-center gap-3 rounded-2xl bg-(--law-ink) p-4 text-sm text-white shadow-2xl">
+            <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-(--law-accent)"><Icon d="m5 12 5 5L20 7" className="h-4 w-4" /></span>
             <span className="flex-1">{toast}</span>
           </motion.div>
         )}
@@ -225,15 +241,16 @@ export function LawDemo() {
 }
 
 function Brand({ compact }: { compact?: boolean }) {
+  const firm = useFirm();
   return (
     <div className={`flex items-center gap-3 ${compact ? "justify-center" : ""}`}>
-      <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl border border-[#c9a96e]/60 bg-gradient-to-br from-[#b08d57] to-[#8a6a3a] font-display text-lg text-white">
+      <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl border border-(--law-accent2)/60 bg-gradient-to-br from-(--law-accent) to-(--law-accent-dark) font-display text-lg text-white">
         <svg viewBox="0 0 24 24" className="h-6 w-6" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" aria-hidden><path d="M12 3v18M7 21h10M5 7h14M5 7l-3 7a3 3 0 0 0 6 0L5 7Zm14 0-3 7a3 3 0 0 0 6 0l-3-7Z" /></svg>
       </span>
       {!compact && (
         <div>
-          <p className="font-display text-base leading-tight text-white">{FIRM_SHORT}</p>
-          <p className="text-[11px] text-[#e6d3ae]">محاماة واستشارات قانونية</p>
+          <p className="font-display text-base leading-tight text-white">{firm.short}</p>
+          <p className="text-[11px] text-(--law-accent-soft)">{firm.tagline}</p>
         </div>
       )}
     </div>
@@ -244,11 +261,11 @@ function ApptRow({ x, setStatus }: { x: Appointment; setStatus: (id: string, s: 
   return (
     <li className="flex flex-wrap items-center gap-3 py-3.5">
       <div className="w-16 shrink-0 text-center">
-        <b className="block text-sm text-[#0f1f3d]">{x.time}</b>
+        <b className="block text-sm text-(--law-ink)">{x.time}</b>
         <span className="text-[10px] text-slate-500">{dayLabel(x.day)}</span>
       </div>
       <div className="min-w-0 flex-1">
-        <p className="font-bold text-[#0f1f3d]">{x.client}</p>
+        <p className="font-bold text-(--law-ink)">{x.client}</p>
         <p className="text-[11px] text-slate-500">{categories[x.category]} • {modes[x.mode]}</p>
       </div>
       <Chip s={x.status} />
@@ -262,15 +279,16 @@ function ApptRow({ x, setStatus }: { x: Appointment; setStatus: (id: string, s: 
 }
 
 function Overview({ appts, go, onAdd, setStatus }: { appts: Appointment[]; go: (t: Tab) => void; onAdd: () => void; setStatus: (id: string, s: Status) => void }) {
+  const firm = useFirm();
   const today = appts.filter((x) => x.day === TODAY && x.status !== "cancelled").sort(byTime);
   const month = appts.filter((x) => x.status !== "cancelled").length + 71;
   const pending = appts.filter((x) => x.status === "pending").length;
   const todayPending = today.filter((x) => x.status === "pending").length;
   return (
     <div className="space-y-5">
-      <div className="relative overflow-hidden rounded-2xl bg-[#0f1f3d] p-6 text-white sm:p-8">
-        <div aria-hidden className="absolute -start-16 -top-24 h-64 w-64 rounded-full bg-[#b08d57]/25 blur-3xl" />
-        <p className="relative text-sm text-[#e6d3ae]">صباح الخير، أ. ريم</p>
+      <div className="relative overflow-hidden rounded-2xl bg-(--law-ink) p-6 text-white sm:p-8">
+        <div aria-hidden className="absolute -start-16 -top-24 h-64 w-64 rounded-full bg-(--law-accent)/25 blur-3xl" />
+        <p className="relative text-sm text-(--law-accent-soft)">{firm.greeting}</p>
         <h2 className="relative mt-2 max-w-2xl text-2xl leading-snug sm:text-3xl">عندك اليوم {today.length} مواعيد استشارة{pending ? `، و${pending} طلبات تنتظر تأكيدك` : ""}.</h2>
         <div className="relative mt-5 flex flex-wrap gap-2">
           <button type="button" onClick={onAdd} className={gold}><Icon d="M12 5v14M5 12h14" className="h-4 w-4" /> إضافة موعد جديد</button>
@@ -288,7 +306,7 @@ function Overview({ appts, go, onAdd, setStatus }: { appts: Appointment[]; go: (
 
       <div className="grid gap-5 xl:grid-cols-5">
         <div className={`${card} xl:col-span-3`}>
-          <Title sub={`${MONTH} • ${dayLabel(TODAY)}`} end={<button type="button" onClick={() => go("appointments")} className="text-xs font-bold text-[#8a6a3a]">كل المواعيد ←</button>}>مواعيد اليوم</Title>
+          <Title sub={`${MONTH} • ${dayLabel(TODAY)}`} end={<button type="button" onClick={() => go("appointments")} className="text-xs font-bold text-(--law-accent-dark)">كل المواعيد ←</button>}>مواعيد اليوم</Title>
           <ul className="divide-y divide-slate-100">
             {today.map((x) => <ApptRow key={x.id} x={x} setStatus={setStatus} />)}
             {today.length === 0 && <li className="py-8 text-center text-sm text-slate-400">لا توجد مواعيد اليوم</li>}
@@ -298,7 +316,7 @@ function Overview({ appts, go, onAdd, setStatus }: { appts: Appointment[]; go: (
           <Title sub="من نماذج الموقع وجوجل والواتساب — آخر 30 يوم">طلبات الاستشارة الواردة</Title>
           <div className="mb-5 grid grid-cols-3 gap-2 text-center">
             {[["342", "طلب جديد"], ["41%", "تحوّل لموعد"], ["7 د", "متوسط الرد"]].map(([v, l]) => (
-              <div key={l} className="rounded-xl bg-[#f6f5f1] p-3"><b className="block font-display text-xl text-[#0f1f3d]">{v}</b><span className="text-[10px] text-slate-500">{l}</span></div>
+              <div key={l} className="rounded-xl bg-(--law-bg) p-3"><b className="block font-display text-xl text-(--law-ink)">{v}</b><span className="text-[10px] text-slate-500">{l}</span></div>
             ))}
           </div>
           <div className="space-y-3.5">{leadsByCategory.map((l) => <Meter key={l.category} label={categories[l.category]} value={l.value} />)}</div>
@@ -328,9 +346,9 @@ function Appointments({ appts, setStatus, onAdd }: { appts: Appointment[]; setSt
     <div className="space-y-5">
       <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
         {(Object.keys(statusMeta) as Status[]).map((s) => (
-          <button key={s} type="button" onClick={() => { setFilter(filter === s ? "all" : s); setView("list"); }} className={`${card} !p-4 text-start transition ${filter === s ? "ring-2 ring-[#b08d57]" : ""}`}>
+          <button key={s} type="button" onClick={() => { setFilter(filter === s ? "all" : s); setView("list"); }} className={`${card} !p-4 text-start transition ${filter === s ? "ring-2 ring-(--law-accent)" : ""}`}>
             <Chip s={s} />
-            <b className="mt-2 block font-display text-2xl text-[#0f1f3d]">{counts(s)}</b>
+            <b className="mt-2 block font-display text-2xl text-(--law-ink)">{counts(s)}</b>
           </button>
         ))}
       </div>
@@ -338,7 +356,7 @@ function Appointments({ appts, setStatus, onAdd }: { appts: Appointment[]; setSt
       <div className="flex flex-wrap items-center justify-between gap-3">
         <div className="inline-flex rounded-xl border border-slate-200 bg-white p-1">
           {(["calendar", "list"] as const).map((v) => (
-            <button key={v} type="button" onClick={() => setView(v)} className={`rounded-lg px-4 py-2 text-xs font-bold transition ${view === v ? "bg-[#0f1f3d] text-white" : "text-slate-600"}`}>{v === "calendar" ? "التقويم" : "القائمة"}</button>
+            <button key={v} type="button" onClick={() => setView(v)} className={`rounded-lg px-4 py-2 text-xs font-bold transition ${view === v ? "bg-(--law-ink) text-white" : "text-slate-600"}`}>{v === "calendar" ? "التقويم" : "القائمة"}</button>
           ))}
         </div>
         <button type="button" onClick={onAdd} className={gold}><Icon d="M12 5v14M5 12h14" className="h-4 w-4" /> إضافة موعد</button>
@@ -357,12 +375,12 @@ function Appointments({ appts, setStatus, onAdd }: { appts: Appointment[]; setSt
                 const items = (byDay[d] ?? []).filter((x) => x.status !== "cancelled");
                 const isFri = (FIRST_WEEKDAY + d - 1) % 7 === 5;
                 return (
-                  <button key={d} type="button" onClick={() => setDay(d)} className={`flex aspect-square flex-col items-center justify-start rounded-xl border p-1 text-xs transition sm:aspect-auto sm:h-20 sm:items-start sm:p-2 ${d === day ? "border-[#b08d57] bg-[#b08d57]/10" : "border-slate-100 hover:border-slate-300"} ${isFri ? "bg-slate-50 text-slate-400" : ""}`}>
-                    <span className={`flex h-6 w-6 items-center justify-center rounded-full font-bold ${d === TODAY ? "bg-[#0f1f3d] text-white" : "text-[#0f1f3d]"}`}>{d}</span>
+                  <button key={d} type="button" onClick={() => setDay(d)} className={`flex aspect-square flex-col items-center justify-start rounded-xl border p-1 text-xs transition sm:aspect-auto sm:h-20 sm:items-start sm:p-2 ${d === day ? "border-(--law-accent) bg-(--law-accent)/10" : "border-slate-100 hover:border-slate-300"} ${isFri ? "bg-slate-50 text-slate-400" : ""}`}>
+                    <span className={`flex h-6 w-6 items-center justify-center rounded-full font-bold ${d === TODAY ? "bg-(--law-ink) text-white" : "text-(--law-ink)"}`}>{d}</span>
                     {items.length > 0 && (
                       <>
                         <span className="mt-auto flex gap-0.5 sm:hidden">{items.slice(0, 3).map((x) => <span key={x.id} className={`h-1.5 w-1.5 rounded-full ${statusMeta[x.status].dot}`} />)}</span>
-                        <span className="mt-1 hidden w-full truncate rounded-md bg-[#0f1f3d]/90 px-1.5 py-0.5 text-start text-[10px] text-white sm:block">{items.length} {items.length === 1 ? "موعد" : "مواعيد"}</span>
+                        <span className="mt-1 hidden w-full truncate rounded-md bg-(--law-ink)/90 px-1.5 py-0.5 text-start text-[10px] text-white sm:block">{items.length} {items.length === 1 ? "موعد" : "مواعيد"}</span>
                       </>
                     )}
                   </button>
@@ -384,10 +402,10 @@ function Appointments({ appts, setStatus, onAdd }: { appts: Appointment[]; setSt
       ) : (
         <div className={card}>
           <div className="mb-3 flex flex-col gap-3 sm:flex-row sm:items-center">
-            <input value={q} onChange={(e) => setQ(e.target.value)} placeholder="ابحث باسم العميل..." className="w-full rounded-xl border border-slate-200 px-4 py-2.5 text-sm focus:border-[#b08d57] focus:outline-none sm:max-w-xs" />
+            <input value={q} onChange={(e) => setQ(e.target.value)} placeholder="ابحث باسم العميل..." className="w-full rounded-xl border border-slate-200 px-4 py-2.5 text-sm focus:border-(--law-accent) focus:outline-none sm:max-w-xs" />
             <div className="flex gap-2 overflow-x-auto">
               {(["all", ...Object.keys(statusMeta)] as (Status | "all")[]).map((s) => (
-                <button key={s} type="button" onClick={() => setFilter(s)} className={`shrink-0 rounded-full px-3.5 py-2 text-xs font-bold ${filter === s ? "bg-[#0f1f3d] text-white" : "bg-slate-100 text-slate-600"}`}>{s === "all" ? "الكل" : statusMeta[s].label}</button>
+                <button key={s} type="button" onClick={() => setFilter(s)} className={`shrink-0 rounded-full px-3.5 py-2 text-xs font-bold ${filter === s ? "bg-(--law-ink) text-white" : "bg-slate-100 text-slate-600"}`}>{s === "all" ? "الكل" : statusMeta[s].label}</button>
               ))}
             </div>
           </div>
@@ -426,7 +444,7 @@ function Clients({ appts }: { appts: Appointment[] }) {
       </div>
       <div className={card}>
         <Title sub="بيانات تواصل وسجل مواعيد فقط — بدون أي تفاصيل قضايا" end={<span className="hidden items-center gap-1 rounded-full bg-emerald-50 px-2.5 py-1 text-[10px] font-bold text-emerald-700 sm:flex"><Icon d="M12 22s8-4 8-11V5l-8-3-8 3v6c0 7 8 11 8 11Z" className="h-3 w-3" /> بيانات مشفّرة</span>}>دليل العملاء</Title>
-        <input value={q} onChange={(e) => setQ(e.target.value)} placeholder="ابحث بالاسم أو رقم الجوال..." className="mb-3 w-full rounded-xl border border-slate-200 px-4 py-2.5 text-sm focus:border-[#b08d57] focus:outline-none sm:max-w-sm" />
+        <input value={q} onChange={(e) => setQ(e.target.value)} placeholder="ابحث بالاسم أو رقم الجوال..." className="mb-3 w-full rounded-xl border border-slate-200 px-4 py-2.5 text-sm focus:border-(--law-accent) focus:outline-none sm:max-w-sm" />
         <div className="overflow-x-auto">
           <table className="w-full min-w-[640px] text-sm">
             <thead>
@@ -436,18 +454,18 @@ function Clients({ appts }: { appts: Appointment[] }) {
             </thead>
             <tbody className="divide-y divide-slate-100">
               {shown.map((c) => (
-                <tr key={c.name} onClick={() => setOpen(c.name)} className="cursor-pointer hover:bg-[#f6f5f1]">
+                <tr key={c.name} onClick={() => setOpen(c.name)} className="cursor-pointer hover:bg-(--law-bg)">
                   <td className="px-2 py-3">
                     <div className="flex items-center gap-2.5">
-                      <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-[#0f1f3d] text-xs font-bold text-[#e6d3ae]">{c.name.charAt(0)}</span>
-                      <b className="text-[#0f1f3d]">{c.name}</b>
+                      <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-(--law-ink) text-xs font-bold text-(--law-accent-soft)">{c.name.charAt(0)}</span>
+                      <b className="text-(--law-ink)">{c.name}</b>
                     </div>
                   </td>
                   <td className="px-2 py-3 text-slate-600" dir="ltr">{c.phone}</td>
                   <td className="px-2 py-3 text-slate-600" dir="ltr">{c.email}</td>
                   <td className="px-2 py-3 text-slate-600">{dayLabel(c.last.day)}</td>
-                  <td className="px-2 py-3"><span className="rounded-full bg-[#b08d57]/10 px-2.5 py-0.5 text-xs font-bold text-[#8a6a3a]">{c.items.length}</span></td>
-                  <td className="px-2 py-3 text-xs font-bold text-[#8a6a3a]">عرض ←</td>
+                  <td className="px-2 py-3"><span className="rounded-full bg-(--law-accent)/10 px-2.5 py-0.5 text-xs font-bold text-(--law-accent-dark)">{c.items.length}</span></td>
+                  <td className="px-2 py-3 text-xs font-bold text-(--law-accent-dark)">عرض ←</td>
                 </tr>
               ))}
             </tbody>
@@ -457,26 +475,26 @@ function Clients({ appts }: { appts: Appointment[] }) {
 
       <AnimatePresence>
         {sel && (
-          <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className="fixed inset-0 z-50 flex items-end justify-center bg-[#0f1f3d]/50 p-4 backdrop-blur-sm sm:items-center" onClick={() => setOpen(null)}>
+          <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className="fixed inset-0 z-50 flex items-end justify-center bg-(--law-ink)/50 p-4 backdrop-blur-sm sm:items-center" onClick={() => setOpen(null)}>
             <motion.div initial={{ y: 40 }} animate={{ y: 0 }} exit={{ y: 40 }} onClick={(e) => e.stopPropagation()} className="max-h-[85vh] w-full max-w-lg overflow-y-auto rounded-2xl bg-white p-6 shadow-2xl">
               <div className="flex items-start justify-between gap-3">
                 <div className="flex items-center gap-3">
-                  <span className="flex h-12 w-12 items-center justify-center rounded-full bg-[#0f1f3d] font-bold text-[#e6d3ae]">{sel.name.charAt(0)}</span>
-                  <div><p className="font-display text-lg text-[#0f1f3d]">{sel.name}</p><p className="text-xs text-slate-500">عميل منذ {sel.items[sel.items.length - 1].day} نوفمبر • المصدر: {sources[sel.items[0].source]}</p></div>
+                  <span className="flex h-12 w-12 items-center justify-center rounded-full bg-(--law-ink) font-bold text-(--law-accent-soft)">{sel.name.charAt(0)}</span>
+                  <div><p className="font-display text-lg text-(--law-ink)">{sel.name}</p><p className="text-xs text-slate-500">عميل منذ {sel.items[sel.items.length - 1].day} نوفمبر • المصدر: {sources[sel.items[0].source]}</p></div>
                 </div>
                 <button type="button" onClick={() => setOpen(null)} className="text-slate-400" aria-label="إغلاق"><Icon d="M18 6 6 18M6 6l12 12" /></button>
               </div>
               <div className="mt-5 grid gap-2 text-sm sm:grid-cols-2">
-                <a href={`tel:${sel.phone.replace(/\s/g, "")}`} className="rounded-xl bg-[#f6f5f1] p-3"><span className="block text-[10px] text-slate-500">الجوال</span><b dir="ltr" className="text-[#0f1f3d]">{sel.phone}</b></a>
-                <a href={`mailto:${sel.email}`} className="rounded-xl bg-[#f6f5f1] p-3"><span className="block text-[10px] text-slate-500">البريد</span><b dir="ltr" className="text-[#0f1f3d]">{sel.email}</b></a>
+                <a href={`tel:${sel.phone.replace(/\s/g, "")}`} className="rounded-xl bg-(--law-bg) p-3"><span className="block text-[10px] text-slate-500">الجوال</span><b dir="ltr" className="text-(--law-ink)">{sel.phone}</b></a>
+                <a href={`mailto:${sel.email}`} className="rounded-xl bg-(--law-bg) p-3"><span className="block text-[10px] text-slate-500">البريد</span><b dir="ltr" className="text-(--law-ink)">{sel.email}</b></a>
               </div>
-              <h4 className="mt-6 text-sm text-[#0f1f3d]">سجل المواعيد والاستشارات</h4>
-              <ol className="mt-3 space-y-3 border-s-2 border-[#b08d57]/30 ps-4">
+              <h4 className="mt-6 text-sm text-(--law-ink)">سجل المواعيد والاستشارات</h4>
+              <ol className="mt-3 space-y-3 border-s-2 border-(--law-accent)/30 ps-4">
                 {sel.items.map((x) => (
                   <li key={x.id} className="relative">
                     <span className={`absolute -start-[1.4rem] top-1.5 h-2.5 w-2.5 rounded-full ${statusMeta[x.status].dot}`} />
                     <div className="flex flex-wrap items-center justify-between gap-2">
-                      <b className="text-sm text-[#0f1f3d]">{dayLabel(x.day)} • {x.time}</b>
+                      <b className="text-sm text-(--law-ink)">{dayLabel(x.day)} • {x.time}</b>
                       <Chip s={x.status} />
                     </div>
                     <p className="text-xs text-slate-500">استشارة {categories[x.category]} • {modes[x.mode]}</p>
@@ -493,6 +511,7 @@ function Clients({ appts }: { appts: Appointment[] }) {
 }
 
 function Seo() {
+  const firm = useFirm();
   return (
     <div className="space-y-5">
       <div className="grid grid-cols-2 gap-3 sm:gap-4 xl:grid-cols-4">
@@ -518,12 +537,12 @@ function Seo() {
             <table className="w-full min-w-[460px] text-sm">
               <thead><tr className="border-b border-slate-200 text-[11px] text-slate-500">{["الكلمة", "البحث الشهري", "قبل", "الآن"].map((h) => <th key={h} className="px-2 py-2 text-start font-bold">{h}</th>)}</tr></thead>
               <tbody className="divide-y divide-slate-100">
-                {keywords.map((k) => (
+                {firm.keywords.map((k) => (
                   <tr key={k.k}>
-                    <td className="px-2 py-3 font-bold text-[#0f1f3d]">{k.k}</td>
+                    <td className="px-2 py-3 font-bold text-(--law-ink)">{k.k}</td>
                     <td className="px-2 py-3 text-slate-500">{k.volume}</td>
                     <td className="px-2 py-3 text-slate-400 line-through">#{k.before}</td>
-                    <td className="px-2 py-3"><span className={`rounded-full px-2.5 py-0.5 text-xs font-bold ${k.now <= 3 ? "bg-[#b08d57] text-white" : "bg-[#0f1f3d]/10 text-[#0f1f3d]"}`}>#{k.now}</span> <span className="text-[11px] font-bold text-emerald-700">▲ {k.before - k.now}</span></td>
+                    <td className="px-2 py-3"><span className={`rounded-full px-2.5 py-0.5 text-xs font-bold ${k.now <= 3 ? "bg-(--law-accent) text-white" : "bg-(--law-ink)/10 text-(--law-ink)"}`}>#{k.now}</span> <span className="text-[11px] font-bold text-emerald-700">▲ {k.before - k.now}</span></td>
                   </tr>
                 ))}
               </tbody>
@@ -534,12 +553,12 @@ function Seo() {
           <Title sub="آخر 30 يوم">ملخص العملاء المحتملين من الموقع</Title>
           <ul className="space-y-3">
             {[["نموذج طلب استشارة", 214], ["زر الواتساب في الموقع", 87], ["الاتصال من خرائط جوجل", 41]].map(([l, v]) => (
-              <li key={l} className="flex items-center justify-between rounded-xl bg-[#f6f5f1] px-4 py-3 text-sm"><span>{l}</span><b className="font-display text-lg text-[#0f1f3d]">{v}</b></li>
+              <li key={l} className="flex items-center justify-between rounded-xl bg-(--law-bg) px-4 py-3 text-sm"><span>{l}</span><b className="font-display text-lg text-(--law-ink)">{v}</b></li>
             ))}
           </ul>
-          <div className="mt-4 rounded-xl border border-[#b08d57]/30 bg-[#b08d57]/5 p-4">
+          <div className="mt-4 rounded-xl border border-(--law-accent)/30 bg-(--law-accent)/5 p-4">
             <p className="text-xs text-slate-600">نسبة تحويل الزوار إلى طلب استشارة</p>
-            <b className="font-display text-3xl text-[#0f1f3d]">2.8%</b>
+            <b className="font-display text-3xl text-(--law-ink)">2.8%</b>
             <p className="text-[11px] text-emerald-700">▲ من 1.1% قبل تحسين الموقع</p>
           </div>
         </div>
@@ -551,7 +570,7 @@ function Seo() {
 function AddModal({ onClose, onSave }: { onClose: () => void; onSave: (x: Omit<Appointment, "id" | "status" | "source">) => void }) {
   const [f, setF] = useState({ client: "", phone: "", email: "", category: "labor" as Category, mode: "office" as Mode, day: TODAY + 1, time: "11:00 ص" });
   const [err, setErr] = useState<string | null>(null);
-  const input = "w-full rounded-xl border border-slate-200 px-3.5 py-2.5 text-sm focus:border-[#b08d57] focus:outline-none";
+  const input = "w-full rounded-xl border border-slate-200 px-3.5 py-2.5 text-sm focus:border-(--law-accent) focus:outline-none";
   const submit = (e: React.FormEvent) => {
     e.preventDefault();
     if (f.client.trim().length < 3) return setErr("اكتب اسم العميل");
@@ -560,9 +579,9 @@ function AddModal({ onClose, onSave }: { onClose: () => void; onSave: (x: Omit<A
     onSave({ ...f, client: f.client.trim(), email: f.email || "—" });
   };
   return (
-    <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className="fixed inset-0 z-50 flex items-end justify-center bg-[#0f1f3d]/50 p-4 backdrop-blur-sm sm:items-center" onClick={onClose}>
+    <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className="fixed inset-0 z-50 flex items-end justify-center bg-(--law-ink)/50 p-4 backdrop-blur-sm sm:items-center" onClick={onClose}>
       <motion.form initial={{ y: 40 }} animate={{ y: 0 }} exit={{ y: 40 }} onClick={(e) => e.stopPropagation()} onSubmit={submit} className="max-h-[90vh] w-full max-w-lg space-y-3 overflow-y-auto rounded-2xl bg-white p-6 shadow-2xl">
-        <div className="flex items-center justify-between"><h3 className="text-lg text-[#0f1f3d]">موعد استشارة جديد</h3><button type="button" onClick={onClose} className="text-slate-400" aria-label="إغلاق"><Icon d="M18 6 6 18M6 6l12 12" /></button></div>
+        <div className="flex items-center justify-between"><h3 className="text-lg text-(--law-ink)">موعد استشارة جديد</h3><button type="button" onClick={onClose} className="text-slate-400" aria-label="إغلاق"><Icon d="M18 6 6 18M6 6l12 12" /></button></div>
         <label className="block text-xs font-bold text-slate-600">اسم العميل<input className={`${input} mt-1`} value={f.client} onChange={(e) => setF({ ...f, client: e.target.value })} /></label>
         <div className="grid gap-3 sm:grid-cols-2">
           <label className="block text-xs font-bold text-slate-600">الجوال<input className={`${input} mt-1`} dir="ltr" inputMode="tel" placeholder="05XXXXXXXX" value={f.phone} onChange={(e) => setF({ ...f, phone: e.target.value })} /></label>
@@ -576,7 +595,7 @@ function AddModal({ onClose, onSave }: { onClose: () => void; onSave: (x: Omit<A
           <label className="block text-xs font-bold text-slate-600">اليوم ({MONTH})<select className={`${input} mt-1`} value={f.day} onChange={(e) => setF({ ...f, day: Number(e.target.value) })}>{Array.from({ length: MONTH_DAYS - TODAY + 1 }, (_, i) => TODAY + i).map((d) => <option key={d} value={d}>{dayLabel(d)}</option>)}</select></label>
           <label className="block text-xs font-bold text-slate-600">الوقت<select className={`${input} mt-1`} value={f.time} onChange={(e) => setF({ ...f, time: e.target.value })}>{["9:00 ص", "10:00 ص", "11:00 ص", "12:00 م", "1:00 م", "4:00 م", "5:00 م", "6:00 م", "7:00 م", "8:00 م"].map((t) => <option key={t}>{t}</option>)}</select></label>
         </div>
-        <p className="rounded-xl bg-[#f6f5f1] p-3 text-[11px] text-slate-500">🔒 نسجل بيانات التواصل وتصنيف الاستشارة فقط. لا تكتب أي تفاصيل عن القضية هنا.</p>
+        <p className="rounded-xl bg-(--law-bg) p-3 text-[11px] text-slate-500">🔒 نسجل بيانات التواصل وتصنيف الاستشارة فقط. لا تكتب أي تفاصيل عن القضية هنا.</p>
         {err && <p className="text-xs font-bold text-rose-600">{err}</p>}
         <button type="submit" className={`${gold} w-full py-3 text-sm`}>حفظ الموعد وإرسال التأكيد</button>
       </motion.form>
@@ -585,11 +604,12 @@ function AddModal({ onClose, onSave }: { onClose: () => void; onSave: (x: Omit<A
 }
 
 function Cta() {
+  const firm = useFirm();
   return (
-    <div className="mt-8 rounded-2xl border border-[#b08d57]/30 bg-white p-6 text-center sm:p-8">
-      <h3 className="text-xl text-[#0f1f3d] sm:text-2xl">جاهزين نشغّلها لمكتبكم؟</h3>
+    <div className="mt-8 rounded-2xl border border-(--law-accent)/30 bg-white p-6 text-center sm:p-8">
+      <h3 className="text-xl text-(--law-ink) sm:text-2xl">جاهزين نشغّلها لمكتبكم؟</h3>
       <p className="mx-auto mt-2 max-w-xl text-sm text-slate-500">هذي نسخة عرض، والنسخة الحقيقية نربطها بنموذج حجز الاستشارات في موقعكم والواتساب، مع حماية كاملة لبيانات العملاء.</p>
-      <a href={whatsappLink(`مرحباً، شفت لوحة التحكم التجريبية لـ ${FIRM} وأبغى أعرف أكثر`)} target="_blank" rel="noopener noreferrer" className={`${primary} mt-5 px-8 py-3.5 text-sm`}>تواصل معنا على واتساب</a>
+      <a href={whatsappLink(`مرحباً، شفت لوحة التحكم التجريبية لـ ${firm.name} وأبغى أعرف أكثر`)} target="_blank" rel="noopener noreferrer" className={`${primary} mt-5 px-8 py-3.5 text-sm`}>تواصل معنا على واتساب</a>
     </div>
   );
 }

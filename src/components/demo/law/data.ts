@@ -1,5 +1,13 @@
-export const FIRM = "مكتب المحامية ريم مسند البلوي";
-export const FIRM_SHORT = "ريم مسند البلوي";
+export type Keyword = { k: string; now: number; before: number; volume: string };
+
+export type LawFirm = {
+  name: string;
+  short: string;
+  tagline: string;
+  greeting: string;
+  keywords: Keyword[];
+  theme: { ink: string; ink2: string; accent: string; accent2: string; accentDark: string; accentSoft: string; bg: string };
+};
 
 export type Status = "pending" | "confirmed" | "completed" | "cancelled";
 export type Category = "commercial" | "labor" | "family" | "realestate" | "contracts";
@@ -62,13 +70,6 @@ export const regions = [
   { name: "مناطق أخرى", value: 5 },
 ];
 
-export const keywords: { k: string; now: number; before: number; volume: string }[] = [
-  { k: "محامية استشارات قانونية", now: 2, before: 14, volume: "2.9K" },
-  { k: "محامي قضايا عمالية", now: 3, before: 18, volume: "4.4K" },
-  { k: "استشارة قانونية أونلاين", now: 4, before: 23, volume: "6.1K" },
-  { k: "محامية أحوال شخصية", now: 1, before: 9, volume: "1.8K" },
-  { k: "صياغة عقود تجارية", now: 5, before: 27, volume: "1.2K" },
-];
 
 export const leadsByCategory: { category: Category; value: number }[] = [
   { category: "labor", value: 34 },
@@ -77,3 +78,33 @@ export const leadsByCategory: { category: Category; value: number }[] = [
   { category: "contracts", value: 13 },
   { category: "realestate", value: 7 },
 ];
+
+export const reemFirm: LawFirm = {
+  name: "مكتب المحامية ريم مسند البلوي",
+  short: "ريم مسند البلوي",
+  tagline: "محاماة واستشارات قانونية",
+  greeting: "صباح الخير، أ. ريم",
+  keywords: [
+    { k: "محامية استشارات قانونية", now: 2, before: 14, volume: "2.9K" },
+    { k: "محامي قضايا عمالية", now: 3, before: 18, volume: "4.4K" },
+    { k: "استشارة قانونية أونلاين", now: 4, before: 23, volume: "6.1K" },
+    { k: "محامية أحوال شخصية", now: 1, before: 9, volume: "1.8K" },
+    { k: "صياغة عقود تجارية", now: 5, before: 27, volume: "1.2K" },
+  ],
+  theme: { ink: "#0f1f3d", ink2: "#162b52", accent: "#b08d57", accent2: "#c9a96e", accentDark: "#8a6a3a", accentSoft: "#e6d3ae", bg: "#f6f5f1" },
+};
+
+export const sariFirm: LawFirm = {
+  name: "مكتب المحامي ساري الفاضلي للمحاماة والاستشارات القانونية",
+  short: "ساري الفاضلي",
+  tagline: "للمحاماة والاستشارات القانونية",
+  greeting: "صباح الخير، أ. ساري",
+  keywords: [
+    { k: "محامي في تبوك", now: 1, before: 11, volume: "3.6K" },
+    { k: "محامي قضايا عمالية تبوك", now: 2, before: 16, volume: "1.9K" },
+    { k: "استشارة قانونية أونلاين", now: 4, before: 23, volume: "6.1K" },
+    { k: "محامي أحوال شخصية تبوك", now: 2, before: 13, volume: "1.4K" },
+    { k: "صياغة عقود تجارية", now: 5, before: 27, volume: "1.2K" },
+  ],
+  theme: { ink: "#263349", ink2: "#31415c", accent: "#ea6a2a", accent2: "#f39a5e", accentDark: "#b9521c", accentSoft: "#fcd9c3", bg: "#f6f5f3" },
+};
