@@ -147,3 +147,8 @@ input[type="range"] {
 .font-tajawal :is(h1, h2, h3, h4, .font-display) {
   font-family: var(--font-body);
 }
+
+.font-cairo,
+.font-cairo :is(h1, h2, h3, h4, .font-display) {
+  font-family: var(--font-display);
+}

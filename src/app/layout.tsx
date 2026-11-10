@@ -6,7 +6,7 @@ import { site } from "@/lib/site";
 const display = Cairo({
   variable: "--font-display",
   subsets: ["arabic", "latin"],
-  weight: ["600", "700", "800"],
+  weight: ["400", "500", "600", "700", "800"],
   display: "swap",
 });
 
