@@ -6,6 +6,7 @@ import { CheckIcon, serviceIcon } from "@/components/ui/Icons";
 import { consultationLink, services } from "@/lib/site";
 
 export const metadata: Metadata = {
+  alternates: { canonical: "/services" },
   title: "الخدمات",
   description: "شات بوت واتساب بالذكاء الاصطناعي، تحسين الظهور في خرائط قوقل، وأتمتة CRM — أنظمة تعمل لأجلك 24/7.",
 };

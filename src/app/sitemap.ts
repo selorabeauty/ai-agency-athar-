@@ -3,7 +3,7 @@ import type { MetadataRoute } from "next";
 const baseUrl = "https://atherdigitalagency.com";
 
 export default function sitemap(): MetadataRoute.Sitemap {
-  const routes = ["/", "/about", "/services", "/contact", "/privacy", "/contact/thank-you"];
+  const routes = ["/", "/about", "/services", "/contact", "/privacy"];
 
   return routes.map((route) => ({
     url: `${baseUrl}${route}`,

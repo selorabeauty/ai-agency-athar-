@@ -24,13 +24,16 @@ export const metadata: Metadata = {
     template: `%s | ${site.name}`,
   },
   description:
-    "نحول حضورك الرقمي إلى حجوزات وعملاء على مدار الساعة: شات بوت واتساب بالذكاء الاصطناعي، تحسين الظهور في خرائط قوقل، وأتمتة CRM للشركات في المملكة العربية السعودية.",
+    "نحول حضورك الرقمي إلى حجوزات وعملاء على مدار الساعة: شات بوت واتساب بالذكاء الاصطناعي، الظهور في خرائط قوقل، وأتمتة CRM للشركات في السعودية.",
   openGraph: {
     title: site.name,
     description: "أنظمة ذكية تعمل لأجلك 24/7 — لأن كل استفسار بعد الدوام هو موعد ضائع ومبيعات ضائعة.",
     locale: "ar_SA",
     type: "website",
+    siteName: site.name,
+    images: [{ url: "/og.png", width: 1200, height: 630, alt: site.name }],
   },
+  twitter: { card: "summary_large_image", images: ["/og.png"] },
 };
 
 export default function RootLayout({

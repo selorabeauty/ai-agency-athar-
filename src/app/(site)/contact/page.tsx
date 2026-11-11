@@ -1,9 +1,10 @@
 import type { Metadata } from "next";
 import { Reveal } from "@/components/ui/Reveal";
 import { SectionLabel } from "@/components/ui/SectionLabel";
-import { consultationLink, site } from "@/lib/site";
+import { consultationLink, site, steps } from "@/lib/site";
 
 export const metadata: Metadata = {
+  alternates: { canonical: "/contact" },
   title: "اطلب استشارة مجانية",
   description: "أخبرنا عن نشاطك وسنعود إليك خلال يوم عمل بتشخيص مجاني لحضورك الرقمي.",
 };
@@ -63,6 +64,21 @@ export default function ContactPage() {
             </a>
           </div>
         </div>
+      </div>
+      <div className="container-x relative pb-20 lg:pb-28">
+        <h2 className="text-2xl text-white">ماذا يحدث بعد أن تتواصل معنا؟</h2>
+        <p className="mt-3 max-w-2xl text-white/75">
+          نخدم المنشآت في تبوك وجميع مناطق المملكة عن بُعد: العيادات، مكاتب المحاماة، المطاعم، الفنادق، الصالونات ومكاتب السفر. هذه خطواتنا من أول رسالة حتى الإطلاق:
+        </p>
+        <ol className="mt-8 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
+          {steps.map((s) => (
+            <li key={s.number} className="card p-6">
+              <span className="text-sm font-bold text-neon">الخطوة {s.number}</span>
+              <h3 className="mt-2 text-lg font-bold text-white">{s.title}</h3>
+              <p className="mt-2 text-sm text-white/75">{s.body}</p>
+            </li>
+          ))}
+        </ol>
       </div>
     </section>
   );

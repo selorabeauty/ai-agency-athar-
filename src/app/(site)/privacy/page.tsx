@@ -3,6 +3,7 @@ import { PageHero } from "@/components/ui/PageHero";
 import { site } from "@/lib/site";
 
 export const metadata: Metadata = {
+  alternates: { canonical: "/privacy" },
   title: "سياسة الخصوصية",
   description: "كيف تجمع أثر للذكاء الاصطناعي بياناتك وتستخدمها وتحميها.",
 };

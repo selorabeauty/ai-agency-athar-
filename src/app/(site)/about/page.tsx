@@ -6,7 +6,8 @@ import { Button } from "@/components/ui/Button";
 import { consultationLink, sectors, site } from "@/lib/site";
 
 export const metadata: Metadata = {
-  title: "من نحن",
+  alternates: { canonical: "/about" },
+  title: "من نحن — وكالة أنظمة ذكية من تبوك",
   description: "أثر للذكاء الاصطناعي: وكالة سعودية تبني أنظمة ذكية تعمل لأجل أصحاب الأعمال على مدار الساعة.",
 };
 
