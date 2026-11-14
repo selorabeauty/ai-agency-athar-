@@ -18,7 +18,7 @@ const icons: Record<Tab, string> = {
 const tabs: { id: Tab; label: string; short: string }[] = [
   { id: "overview", label: "لوحة التحكم والإحصائيات", short: "الرئيسية" },
   { id: "menu", label: "إدارة المنيو والأسعار", short: "المنيو" },
-  { id: "qr", label: "باركود الطاولات QR", short: "الباركود" },
+  { id: "qr", label: "باركود الطلب QR", short: "الباركود" },
 ];
 
 const sar = (n: number) => `${n.toLocaleString("en-US")} ر.س`;
@@ -148,7 +148,7 @@ export function WingDemo() {
             ))}
           </nav>
           <div className="mt-auto rounded-2xl border border-white/[0.06] bg-white/[0.03] p-4 text-xs">
-            <p className="flex items-center gap-2 font-bold text-white"><Pulse /> المنيو مربوط بباركود الطاولات</p>
+            <p className="flex items-center gap-2 font-bold text-white"><Pulse /> المنيو مربوط بباركود الطلب</p>
             <p className="mt-1.5 text-amber-100/50">أي تعديل يظهر فوراً عند مسح العميل للباركود.</p>
           </div>
         </aside>
@@ -218,17 +218,17 @@ function Overview({ menu, tables, go }: { menu: MenuItem[]; tables: TableQr[]; g
         <div aria-hidden className="absolute -start-10 -top-20 h-64 w-64 rounded-full bg-amber-500/15 blur-3xl" />
         <p className="relative text-sm text-amber-300">مساء الخير، إدارة {COFFEE} ☕</p>
         <h2 className="relative mt-2 max-w-2xl text-2xl font-bold leading-snug text-white sm:text-3xl">
-          {soldOut.length ? `عندك ${soldOut.length} أصناف نافدة اليوم — حدّث المنيو بضغطة وينعكس على باركود الطاولات فوراً.` : "كل أصناف المنيو متوفرة اليوم، وباركود الطاولات يستقبل مسح العملاء الآن."}
+          {soldOut.length ? `عندك ${soldOut.length} أصناف نافدة اليوم — حدّث المنيو بضغطة وينعكس على باركود الطلب فوراً.` : "كل أصناف المنيو متوفرة اليوم، وباركود الطلب يستقبل مسح العملاء الآن."}
         </h2>
         <div className="relative mt-5 flex flex-wrap gap-2">
           <button type="button" onClick={() => go("menu")} className={primary}>تحديث المنيو والأسعار</button>
-          <button type="button" onClick={() => go("qr")} className={ghost}>باركود الطاولات</button>
+          <button type="button" onClick={() => go("qr")} className={ghost}>باركود الطلب</button>
         </div>
       </div>
 
       <div className="grid grid-cols-2 gap-3 sm:gap-4 xl:grid-cols-4">
         <Stat label="أصناف المنيو" value={String(menu.length)} sub={`${menu.length - soldOut.length} متوفرة الآن`} />
-        <Stat label="مسحات الباركود اليوم" value={scans.toLocaleString("en-US")} sub="عميل فتح المنيو من الطاولة" accent />
+        <Stat label="مسحات الباركود اليوم" value={scans.toLocaleString("en-US")} sub="عميل فتح المنيو من الباركود" accent />
         <Stat label="طلبات عبر الباركود" value={String(orders)} sub={`معدل التحويل ${Math.round((orders / scans) * 100)}%`} />
         <Stat label="تقييم الكوفي" value="4.8 ★" sub="على خرائط جوجل" />
       </div>
@@ -282,18 +282,18 @@ function Menu({ menu, setMenu, notify }: { menu: MenuItem[]; setMenu: React.Disp
     if (!Number.isFinite(p) || p <= 0) return;
     setMenu((ms) => ms.map((x) => (x.id === m.id ? { ...x, price: Math.round(p) } : x)));
     setEditing(null);
-    notify(`تم تحديث سعر «${m.name}» إلى ${sar(Math.round(p))} — في كل باركود طاولة`);
+    notify(`تم تحديث سعر «${m.name}» إلى ${sar(Math.round(p))} — في كل باركودات الطلب`);
   };
   const remove = (m: MenuItem) => {
     setMenu((ms) => ms.filter((x) => x.id !== m.id));
-    notify(`حُذف «${m.name}» من المنيو — اختفى من باركود الطاولات`);
+    notify(`حُذف «${m.name}» من المنيو — اختفى من باركود الطلب`);
   };
   const addItem = () => {
     const p = Number(newPrice);
     if (!newName.trim() || !Number.isFinite(p) || p <= 0) return;
     setMenu((ms) => [{ id: `w${Date.now()}`, name: newName.trim(), cat: newCat, price: Math.round(p), available: true, sold: 0 }, ...ms]);
     setAdding(false); setNewName(""); setNewPrice("");
-    notify(`✅ أُضيف «${newName.trim()}» للمنيو — ظهر مباشرة في باركود الطاولات`);
+    notify(`✅ أُضيف «${newName.trim()}» للمنيو — ظهر مباشرة في باركود الطلب`);
   };
 
   return (
@@ -364,14 +364,14 @@ function Menu({ menu, setMenu, notify }: { menu: MenuItem[]; setMenu: React.Disp
           {shown.length === 0 && <li className="py-8 text-center text-sm text-amber-100/40">لا توجد نتائج</li>}
         </ul>
       </div>
-      <p className="text-center text-xs text-amber-100/40">أي إضافة أو تعديل سعر أو نفاد يتحدّث لحظياً في المنيو اللي يشوفه العميل من باركود الطاولة.</p>
+      <p className="text-center text-xs text-amber-100/40">أي إضافة أو تعديل سعر أو نفاد يتحدّث لحظياً في المنيو اللي يشوفه العميل من الباركود.</p>
     </div>
   );
 }
 
 function Qr({ tables, setTables, notify }: { tables: TableQr[]; setTables: React.Dispatch<React.SetStateAction<TableQr[]>>; notify: (t: string) => void }) {
   const [imgs, setImgs] = useState<Record<string, string>>({});
-  const [newZone, setNewZone] = useState("الجلسات الداخلية");
+  const [newZone, setNewZone] = useState("داخل المحل");
   const zones = [...new Set(tables.map((t) => t.zone))];
   const active = tables.filter((t) => t.active).length;
   const scans = tables.reduce((s, t) => s + t.scans, 0);
@@ -390,12 +390,12 @@ function Qr({ tables, setTables, notify }: { tables: TableQr[]; setTables: React
 
   const toggle = (t: TableQr) => {
     setTables((ts) => ts.map((x) => (x.id === t.id ? { ...x, active: !x.active } : x)));
-    notify(t.active ? `باركود ${t.table} توقّف — العميل بيحصل رسالة «الطاولة غير مفعّلة»` : `باركود ${t.table} تفعّل ✅ — العميل يقدر يمسح ويطلب`);
+    notify(t.active ? `باركود «${t.table}» توقّف — العميل بيحصل رسالة «الباركود غير مفعّل»` : `باركود «${t.table}» تفعّل ✅ — العميل يقدر يمسح ويطلب`);
   };
   const addTable = () => {
     const n = tables.length + 1;
-    setTables((ts) => [...ts, { id: `t${Date.now()}`, table: `طاولة ${n}`, zone: newZone, scans: 0, orders: 0, active: true }]);
-    notify(`✅ أُنشئ باركود جديد لطاولة ${n} في «${newZone}» — اطبعه والصقه على الطاولة`);
+    setTables((ts) => [...ts, { id: `t${Date.now()}`, table: `نقطة ${n}`, zone: newZone, scans: 0, orders: 0, active: true }]);
+    notify(`✅ أُنشئ باركود جديد «${n}» في «${newZone}» — اطبعه والصقه في مكانه`);
   };
   const download = (t: TableQr) => {
     const img = imgs[t.id];
@@ -404,26 +404,26 @@ function Qr({ tables, setTables, notify }: { tables: TableQr[]; setTables: React
     a.href = img;
     a.download = `qr-${t.table}.png`;
     a.click();
-    notify(`نزّلت باركود ${t.table} PNG — جاهز للطباعة واللصق على الطاولة`);
+    notify(`نزّلت باركود «${t.table}» PNG — جاهز للطباعة واللصق في مكانه`);
   };
 
   return (
     <div className="space-y-5">
       <div className="grid grid-cols-3 gap-3">
-        <Stat label="باركودات الطاولات" value={String(tables.length)} sub={`${zones.length} مناطق جلوس`} />
+        <Stat label="باركودات الطلب" value={String(tables.length)} sub={`${zones.length} نقاط مسح`} />
         <Stat label="مفعّلة الآن" value={String(active)} sub="تستقبل مسح العملاء" accent />
         <Stat label="مسحات اليوم" value={scans.toLocaleString("en-US")} sub={`${tables.reduce((s, t) => s + t.orders, 0)} طلب عبر الباركود`} />
       </div>
 
       <div className={card}>
-        <Title sub="كل طاولة لها باركود خاص — العميل يمسح ويشوف المنيو ويطلب من جواله">إضافة باركود طاولة جديدة</Title>
+        <Title sub="كل نقطة لها باركود خاص — تعرف وين يمسح عملاؤك: المحل، الواجهة، الفلاير، أو السوشال">إضافة باركود جديد</Title>
         <div className="flex flex-wrap items-center gap-2">
           <select value={newZone} onChange={(e) => setNewZone(e.target.value)} className="rounded-full border border-white/10 bg-[#241812] px-4 py-2 text-sm text-white focus:border-amber-400/60 focus:outline-none">
             {zones.map((z) => <option key={z} value={z}>{z}</option>)}
-            <option value="جلسة جديدة">+ منطقة جلسات جديدة</option>
+            <option value="نقطة جديدة">+ نقطة جديدة</option>
           </select>
-          <button type="button" onClick={addTable} className={primary}>+ إنشاء باركود طاولة</button>
-          <button type="button" onClick={() => notify("في النسخة الفعلية: تضغط «طباعة الكل» ويطلع لك ملف PDF فيه كل باركود مع رقم الطاولة — تطبعه وتلصقه")} className={ghost}>🖨️ طباعة كل الباركودات</button>
+          <button type="button" onClick={addTable} className={primary}>+ إنشاء باركود</button>
+          <button type="button" onClick={() => notify("في النسخة الفعلية: تضغط «طباعة الكل» ويطلع لك ملف PDF فيه كل باركود مع اسمه — تطبعه وتلصقه في مكانه")} className={ghost}>🖨️ طباعة كل الباركودات</button>
         </div>
       </div>
 
@@ -458,9 +458,9 @@ function Qr({ tables, setTables, notify }: { tables: TableQr[]; setTables: React
 function Cta() {
   return (
     <div className="mt-10 overflow-hidden rounded-3xl border border-amber-400/25 bg-gradient-to-l from-amber-700/30 via-[#241812] to-[#1d1410] p-6 text-center sm:p-8">
-      <h3 className="text-xl font-bold text-white sm:text-2xl">خلّ عملاء {COFFEE} يطلبون من الطاولة بدون انتظار ☕</h3>
+      <h3 className="text-xl font-bold text-white sm:text-2xl">خلّ عملاء {COFFEE} يطلبون من جوالهم بدون انتظار ☕</h3>
       <p className="mx-auto mt-2 max-w-2xl text-sm text-amber-100/60">
-        هذا عرض تجريبي ببيانات وهمية. لو عجبك، نطلق نفس اللوحة باسم كوفيك ومنيوك وباركود طاولاتك خلال أيام — مع صيانة ودعم فني مستمر.
+        هذا عرض تجريبي ببيانات وهمية. لو عجبك، نطلق نفس اللوحة باسم كوفيك ومنيوك وباركود طلباتك خلال أيام — مع صيانة ودعم فني مستمر.
       </p>
       <a href={whatsappLink("أهلاً، شفت العرض التجريبي للوحة تحكم الكوفي وأبي أفعّلها لمحلي")} target="_blank" rel="noreferrer" className={`${primary} mt-5`}>
         أبغى اللوحة لمحلي — كلمني واتساب

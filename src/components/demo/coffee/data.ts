@@ -34,14 +34,11 @@ export const initialMenu: MenuItem[] = [
 export type TableQr = { id: string; table: string; zone: string; scans: number; orders: number; active: boolean };
 
 export const initialTables: TableQr[] = [
-  { id: "t1", table: "طاولة 1", zone: "الجلسات الداخلية", scans: 41, orders: 12, active: true },
-  { id: "t2", table: "طاولة 2", zone: "الجلسات الداخلية", scans: 38, orders: 9, active: true },
-  { id: "t3", table: "طاولة 3", zone: "الجلسات الداخلية", scans: 29, orders: 8, active: true },
-  { id: "t4", table: "طاولة 4", zone: "الجلسات الخارجية", scans: 55, orders: 17, active: true },
-  { id: "t5", table: "طاولة 5", zone: "الجلسات الخارجية", scans: 47, orders: 14, active: true },
-  { id: "t6", table: "طاولة 6", zone: "الجلسات الخارجية", scans: 33, orders: 11, active: false },
-  { id: "t7", table: "طاولة 7", zone: "جلسات العائلات", scans: 22, orders: 6, active: true },
-  { id: "t8", table: "طاولة 8", zone: "جلسات العائلات", scans: 18, orders: 5, active: true },
+  { id: "t1", table: "كاونتر الاستلام", zone: "داخل المحل", scans: 96, orders: 31, active: true },
+  { id: "t2", table: "واجهة المحل", zone: "خارج المحل", scans: 74, orders: 19, active: true },
+  { id: "t3", table: "ستيكر على الكوب", zone: "التغليف", scans: 38, orders: 8, active: true },
+  { id: "t4", table: "فلاير الإعلانات", zone: "التسويق", scans: 52, orders: 11, active: true },
+  { id: "t5", table: "رابط السوشال ميديا", zone: "التسويق", scans: 63, orders: 15, active: false },
 ];
 
 export const hourly = { labels: ["6ص", "8ص", "10ص", "12م", "2م", "4م", "6م", "8م", "10م", "12ص"], values: [8, 19, 15, 9, 7, 11, 16, 24, 21, 10] };
