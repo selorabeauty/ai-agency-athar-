@@ -1,4 +1,6 @@
+import Link from "next/link";
 import { consultationLink, industries } from "@/lib/site";
+import { industryPages } from "@/lib/seo-pages";
 import { Button } from "@/components/ui/Button";
 import { Reveal } from "@/components/ui/Reveal";
 import { SectionHeading } from "@/components/ui/SectionHeading";
@@ -29,6 +31,11 @@ export function Industries() {
                   {it.win}
                 </p>
               </div>
+              {industryPages.find((p) => p.name === it.name) && (
+                <Link href={`/industries/${industryPages.find((p) => p.name === it.name)!.slug}`} className="mt-auto pt-5 text-sm font-bold text-neon hover:underline">
+                  كيف نجلب عملاء لـ{it.name} ←
+                </Link>
+              )}
             </Reveal>
           ))}
         </div>

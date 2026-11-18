@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { legalLinks, nav, services, site } from "@/lib/site";
+import { servicePages } from "@/lib/seo-pages";
 import { Logo } from "./Logo";
 
 export function Footer() {
@@ -47,7 +48,7 @@ export function Footer() {
             <ul className="space-y-3 text-sm text-white/80">
               {services.map((s) => (
                 <li key={s.id}>
-                  <Link href={`/services#${s.id}`} className="hover:text-neon">
+                  <Link href={`/services/${servicePages.find((p) => p.serviceId === s.id)?.slug}`} className="hover:text-neon">
                     {s.title}
                   </Link>
                 </li>

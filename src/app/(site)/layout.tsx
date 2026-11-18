@@ -1,6 +1,7 @@
 import { Header } from "@/components/layout/Header";
 import { Footer } from "@/components/layout/Footer";
 import { packages, services, site } from "@/lib/site";
+import { servicePages } from "@/lib/seo-pages";
 
 const baseUrl = "https://atherdigitalagency.com";
 
@@ -22,6 +23,16 @@ const orgSchema = {
       areaServed: { "@type": "Country", name: "المملكة العربية السعودية" },
       availableLanguage: ["ar", "en"],
       knowsAbout: services.map((s) => s.title),
+      foundingLocation: { "@type": "Place", name: "تبوك، المملكة العربية السعودية" },
+      contactPoint: { "@type": "ContactPoint", telephone: site.phone, contactType: "customer service", areaServed: "SA", availableLanguage: ["ar"] },
+      hasOfferCatalog: {
+        "@type": "OfferCatalog",
+        name: "خدمات أثر",
+        itemListElement: servicePages.map((p) => ({
+          "@type": "Offer",
+          itemOffered: { "@type": "Service", name: services.find((s) => s.id === p.serviceId)?.title, url: `${baseUrl}/services/${p.slug}` },
+        })),
+      },
       makesOffer: packages.map((p) => ({
         "@type": "Offer",
         name: p.name,
