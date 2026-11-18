@@ -6,7 +6,7 @@ const fmt = (n: number) => new Intl.NumberFormat("ar-SA-u-nu-latn").format(Math.
 
 export function LossCalculator() {
   const [perDay, setPerDay] = useState(2);
-  const [value, setValue] = useState(1500);
+  const [value, setValue] = useState(5000);
   const id = useId();
   const monthly = perDay * 26 * value;
   const yearly = monthly * 12;
@@ -14,13 +14,13 @@ export function LossCalculator() {
   return (
     <div className="card p-6 sm:p-8">
       <p className="label">احسبها بنفسك</p>
-      <h3 className="mt-3 text-xl font-bold text-white sm:text-2xl">كم تخسر سنويًا بسبب الاستفسارات التي لا تُجاب؟</h3>
+      <h3 className="mt-3 text-xl font-bold text-white sm:text-2xl">كم تخسر سنويًا بسبب الطلبات التي لا تُجاب؟</h3>
 
       <div className="mt-8 grid gap-8 sm:grid-cols-2">
         <div>
           <div className="flex items-center justify-between text-sm">
             <label htmlFor={`${id}-perday`} className="text-white/80">
-              استفسارات ضائعة يوميًا
+              طلبات ضائعة يوميًا
             </label>
             <span className="font-display font-bold text-neon">{perDay}</span>
           </div>
@@ -29,11 +29,11 @@ export function LossCalculator() {
         <div>
           <div className="flex items-center justify-between text-sm">
             <label htmlFor={`${id}-value`} className="text-white/80">
-              متوسط قيمة العميل (ر.س)
+              متوسط قيمة المشروع أو العميل (ر.س)
             </label>
             <span className="font-display font-bold text-neon">{fmt(value)}</span>
           </div>
-          <input id={`${id}-value`} type="range" min={200} max={20000} step={100} value={value} onChange={(e) => setValue(Number(e.target.value))} className="mt-3 w-full" />
+          <input id={`${id}-value`} type="range" min={500} max={100000} step={500} value={value} onChange={(e) => setValue(Number(e.target.value))} className="mt-3 w-full" />
         </div>
       </div>
 

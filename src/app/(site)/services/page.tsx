@@ -8,7 +8,7 @@ import { consultationLink, services } from "@/lib/site";
 export const metadata: Metadata = {
   alternates: { canonical: "/services" },
   title: "الخدمات",
-  description: "شات بوت واتساب بالذكاء الاصطناعي، تحسين الظهور في خرائط قوقل، وأتمتة CRM — أنظمة تعمل لأجلك 24/7.",
+  description: "شات بوت واتساب بالذكاء الاصطناعي، الظهور في خرائط قوقل، إعلانات قوقل، وأتمتة CRM — أنظمة تجلب لك طلبات وعملاء 24/7.",
 };
 
 export default function ServicesPage() {
@@ -16,8 +16,8 @@ export default function ServicesPage() {
     <>
       <PageHero
         label="الخدمات"
-        title="ثلاثة أنظمة، هدف واحد: ألّا يضيع عليك عميل"
-        lead="كل خدمة تعمل وحدها، لكنها تُحدث الأثر الأكبر عندما تعمل معًا كمنظومة واحدة."
+        title="أربعة أنظمة، هدف واحد: مبيعات أكثر كل شهر"
+        lead="كل خدمة تجلب نتيجة وحدها، لكن الأثر الأكبر يظهر عندما تعمل معًا: ظهور، ثم ردّ فوري، ثم متابعة حتى الإغلاق."
       />
       {services.map((s, i) => {
         const Icon = serviceIcon[s.id];
@@ -69,7 +69,7 @@ export default function ServicesPage() {
               اطلب استشارة مجانية <span aria-hidden>↗</span>
             </Button>
             <Button href="/#pricing" variant="outline" size="lg">
-              الباقات والأسعار
+              الباقات
             </Button>
           </div>
         </div>

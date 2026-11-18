@@ -94,7 +94,7 @@ export const businessTypes: BusinessType[] = [
 
 export const businessTypeById = (id: string) => businessTypes.find((b) => b.id === id);
 
-export const packageOptions = [...packages.map((p) => `${p.name} — ${p.setup}`), "لم أحدد بعد"];
+export const packageOptions = [...packages.map((p) => p.name), "لم أحدد بعد"];
 
 export const days = ["السبت", "الأحد", "الاثنين", "الثلاثاء", "الأربعاء", "الخميس", "الجمعة"];
 

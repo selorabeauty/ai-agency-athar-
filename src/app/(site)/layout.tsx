@@ -26,8 +26,6 @@ const orgSchema = {
         "@type": "Offer",
         name: p.name,
         description: p.target,
-        price: p.setup.replace(/[^0-9]/g, ""),
-        priceCurrency: "SAR",
         url: `${baseUrl}/#pricing`,
       })),
     },
