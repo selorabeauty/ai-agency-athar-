@@ -84,7 +84,7 @@ export function Hero() {
               اطلب استشارة مجانية <span aria-hidden>↗</span>
             </Button>
             <Button href="/#pricing" variant="outline" size="lg">
-              شاهد الباقات والأسعار
+              شاهد الباقات
             </Button>
           </motion.div>
 

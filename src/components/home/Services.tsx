@@ -11,11 +11,11 @@ export function Services() {
       <div className="container-x relative py-20 lg:py-28">
         <SectionHeading
           label="ماذا نبني لك"
-          title="ثلاثة أنظمة تعمل معًا لتحويل كل استفسار إلى عميل"
-          lead="لا نبيع أدوات متفرقة. نبني لك منظومة واحدة: يراك العميل في الخرائط، يراسلك على واتساب، يُجاب فورًا، ويُتابَع حتى يحجز."
+          title="أربعة أنظمة تعمل معًا لتحويل كل بحث في قوقل إلى عقد موقّع"
+          lead="لا نبيع تصاميم ولا كلامًا. نبني لك آلة طلبات: يجدك العميل في قوقل، يراسلك على واتساب، يُجاب فورًا، ويُتابَع حتى يدفع."
         />
 
-        <div className="mt-14 grid gap-5 lg:grid-cols-3">
+        <div className="mt-14 grid gap-5 md:grid-cols-2">
           {services.map((s, i) => {
             const Icon = serviceIcon[s.id];
             return (

@@ -29,6 +29,17 @@ export function WorkflowIcon({ className = "h-6 w-6" }: { className?: string }) 
   );
 }
 
+export function TargetIcon({ className = "h-6 w-6" }: { className?: string }) {
+  return (
+    <svg viewBox="0 0 24 24" className={className} {...base} aria-hidden>
+      <circle cx="12" cy="12" r="8.5" />
+      <circle cx="12" cy="12" r="4.5" />
+      <circle cx="12" cy="12" r="1" />
+      <path d="m15 9 5-5M17 4h3v3" />
+    </svg>
+  );
+}
+
 export function CheckIcon({ className = "h-4 w-4" }: { className?: string }) {
   return (
     <svg viewBox="0 0 24 24" className={className} {...base} strokeWidth={2.2} aria-hidden>
@@ -40,5 +51,6 @@ export function CheckIcon({ className = "h-4 w-4" }: { className?: string }) {
 export const serviceIcon = {
   chatbots: ChatIcon,
   maps: MapPinIcon,
+  ads: TargetIcon,
   crm: WorkflowIcon,
 } as const;

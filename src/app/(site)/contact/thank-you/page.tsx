@@ -23,7 +23,7 @@ export default function ThankYouPage() {
           في هذه الأثناء، راجع الباقات أو اقرأ عن طريقتنا في العمل.
         </Reveal>
         <Reveal delay={0.15} className="mt-10 flex flex-col gap-3 sm:flex-row">
-          <Button href="/#pricing">الباقات والأسعار</Button>
+          <Button href="/#pricing">الباقات</Button>
           <Button href="/about" variant="outline">
             من نحن
           </Button>
