@@ -3,7 +3,9 @@ import { PageHero } from "@/components/ui/PageHero";
 import { Reveal } from "@/components/ui/Reveal";
 import { Button } from "@/components/ui/Button";
 import { CheckIcon, serviceIcon } from "@/components/ui/Icons";
+import Link from "next/link";
 import { consultationLink, services } from "@/lib/site";
+import { servicePages } from "@/lib/seo-pages";
 
 export const metadata: Metadata = {
   alternates: { canonical: "/services" },
@@ -55,6 +57,9 @@ export default function ServicesPage() {
                     ))}
                   </ul>
                   <p className="mt-6 border-t border-line pt-5 text-sm font-bold text-white">{s.outcome}</p>
+                  <Link href={`/services/${servicePages.find((p) => p.serviceId === s.id)?.slug}`} className="mt-4 inline-flex text-sm font-bold text-neon hover:underline">
+                    تفاصيل {s.title} ←
+                  </Link>
                 </Reveal>
               </div>
             </div>
